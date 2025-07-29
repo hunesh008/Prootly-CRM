@@ -47,10 +47,13 @@ export default function ProfileModal({ isOpen, onClose, profile, onSave }: Profi
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-gray-900">
+      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-gray-900" aria-describedby="profile-description">
         <DialogHeader>
           <DialogTitle className="text-slate-800 dark:text-slate-200">Edit Profile</DialogTitle>
         </DialogHeader>
+        <div id="profile-description" className="sr-only">
+          Edit your profile information including name, email, role, and profile picture
+        </div>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Profile Image Section */}
