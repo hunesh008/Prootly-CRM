@@ -1,52 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Edit, Activity, MoreHorizontal, Filter, Download, ChevronDown, ChevronUp, ArrowUpDown } from 'lucide-react';
-
-// Theme styles EXACTLY matching screenshots
-const themeStyles = {
-  dark: {
-    background: '#1a1a1a',           // Main background from screenshot
-    cardBackground: '#1f1f1f',       // Table rows from screenshot
-    headerBackground: '#2a2a2a',     // Header from screenshot
-    textPrimary: '#ffffff',          // White text from screenshot
-    textSecondary: '#9ca3af',        // Gray text from screenshot
-    border: '#333333',               // Border color from screenshot
-    hoverBackground: '#2a2a2a',      // Row hover from screenshot
-    plansetButton: '#ffd700',        // Yellow button from screenshot
-    filterButton: '#10b981',         // Green filter from screenshot
-    searchBackground: '#2a2a2a',     // Search input from screenshot
-    searchBorder: '#404040'          // Search border from screenshot
-  },
-  light: {
-    background: '#ffffff',           // Light main background
-    cardBackground: '#ffffff',       // Light table rows
-    headerBackground: '#f8f9fa',     // Light header
-    textPrimary: '#1a1a1a',         // Dark text
-    textSecondary: '#6b7280',       // Gray text
-    border: '#e5e7eb',              // Light border
-    hoverBackground: '#f9fafb',     // Light row hover
-    plansetButton: '#ffd700',        // Same yellow button
-    filterButton: '#10b981',         // Same green filter
-    searchBackground: '#ffffff',     // White search input
-    searchBorder: '#d1d5db'         // Light search border
-  }
-};
-
-// Status badge colors EXACTLY from screenshot
-const statusColors = {
-  'IN PROGRESS': '#3b82f6',         // Exact blue from screenshot
-  'READY FOR DESIGN': '#06b6d4'     // Exact teal from screenshot
-};
-
-// Priority badge colors EXACTLY from screenshot
-const priorityColors = {
-  'HIGH': '#ef4444'                 // Exact red from screenshot
-};
-
-// Avatar colors EXACTLY from screenshot
-const avatarColors = [
-  '#4ecdc4', '#ff6b6b', '#45b7d1', '#f9ca24', 
-  '#6c5ce7', '#fd79a8', '#00b894', '#fdcb6e'
-];
+import { Search, Edit, Activity, MoreHorizontal, Download, ChevronDown, ChevronUp, ArrowUpDown } from 'lucide-react';
 
 // Types for project data
 interface Project {
@@ -86,31 +39,16 @@ interface TableFilters {
 function Header({ 
   filters, 
   onFiltersChange, 
-  onExport, 
-  isDarkMode, 
-  onThemeToggle 
+  onExport
 }: {
   filters: TableFilters;
   onFiltersChange: (filters: TableFilters) => void;
   onExport: () => void;
-  isDarkMode: boolean;
-  onThemeToggle: () => void;
 }) {
-  const theme = isDarkMode ? themeStyles.dark : themeStyles.light;
-
   return (
-    <div 
-      className="flex items-center justify-between p-4 border-b"
-      style={{ 
-        backgroundColor: theme.headerBackground, 
-        borderColor: theme.border 
-      }}
-    >
+    <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
       <div className="flex items-center space-x-4">
-        <button 
-          className="px-4 py-2 rounded-md font-medium flex items-center space-x-2 text-black"
-          style={{ backgroundColor: theme.plansetButton }}
-        >
+        <button className="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-md font-medium flex items-center space-x-2 transition-colors">
           <span>📍</span>
           <span>Planset</span>
           <ChevronDown className="w-4 h-4" />
@@ -124,12 +62,11 @@ function Header({
               ...filters,
               status: e.target.value as FilterType
             })}
-            className="px-3 py-2 rounded-md text-white font-medium border-none outline-none appearance-none cursor-pointer"
-            style={{ backgroundColor: theme.filterButton }}
+            className="px-3 py-2 rounded-md text-white font-medium border-none outline-none appearance-none cursor-pointer bg-green-600 hover:bg-green-700 transition-colors"
           >
-            <option value="all" style={{ backgroundColor: '#2a2a2a', color: 'white' }}>All Status</option>
-            <option value="IN PROGRESS" style={{ backgroundColor: '#2a2a2a', color: 'white' }}>In Progress</option>
-            <option value="READY FOR DESIGN" style={{ backgroundColor: '#2a2a2a', color: 'white' }}>Ready for Design</option>
+            <option value="all">All Status</option>
+            <option value="IN PROGRESS">In Progress</option>
+            <option value="READY FOR DESIGN">Ready for Design</option>
           </select>
           <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
         </div>
@@ -137,12 +74,7 @@ function Header({
         {/* Export Button */}
         <button
           onClick={onExport}
-          className="px-3 py-2 rounded-md border flex items-center space-x-2"
-          style={{ 
-            borderColor: theme.border,
-            backgroundColor: theme.cardBackground,
-            color: theme.textPrimary
-          }}
+          className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2 transition-colors"
         >
           <Download className="w-4 h-4" />
           <span>Export</span>
@@ -152,8 +84,7 @@ function Header({
       <div className="flex items-center space-x-4">
         {/* Advanced Search */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" 
-                 style={{ color: theme.textSecondary }} />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
           <input
             type="text"
             placeholder="Search here..."
@@ -162,27 +93,9 @@ function Header({
               ...filters,
               search: e.target.value
             })}
-            className="pl-10 pr-4 py-2 rounded-md border focus:outline-none w-64"
-            style={{ 
-              backgroundColor: theme.searchBackground,
-              color: theme.textPrimary,
-              borderColor: theme.searchBorder
-            }}
+            className="pl-10 pr-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-64 transition-colors"
           />
         </div>
-
-        {/* Theme Toggle */}
-        <button
-          onClick={onThemeToggle}
-          className="px-3 py-2 rounded-md border"
-          style={{ 
-            borderColor: theme.border,
-            backgroundColor: theme.cardBackground,
-            color: theme.textPrimary
-          }}
-        >
-          {isDarkMode ? '☀️' : '🌙'}
-        </button>
       </div>
     </div>
   );
@@ -192,16 +105,12 @@ function Header({
 function TableHeader({ 
   sortField, 
   sortDirection, 
-  onSort, 
-  isDarkMode 
+  onSort 
 }: {
   sortField: string | null;
   sortDirection: SortDirection;
   onSort: (field: string) => void;
-  isDarkMode: boolean;
 }) {
-  const theme = isDarkMode ? themeStyles.dark : themeStyles.light;
-
   const getSortIcon = (field: string) => {
     if (sortField !== field) return <ArrowUpDown className="w-4 h-4 opacity-50" />;
     return sortDirection === 'asc' ? 
@@ -212,14 +121,7 @@ function TableHeader({
   const headerClass = "flex items-center space-x-1 cursor-pointer hover:opacity-80 transition-opacity";
 
   return (
-    <div 
-      className="grid grid-cols-7 gap-4 p-4 border-b text-sm font-medium uppercase tracking-wide"
-      style={{ 
-        backgroundColor: theme.headerBackground,
-        borderColor: theme.border,
-        color: theme.textSecondary
-      }}
-    >
+    <div className="grid grid-cols-7 gap-4 p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-medium uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800">
       <div className={headerClass} onClick={() => onSort('customer')}>
         <span>Customer Details</span>
         {getSortIcon('customer')}
@@ -250,23 +152,20 @@ function TableHeader({
 }
 
 // Enhanced Individual Row Component
-function ProjectRow({ project, isDarkMode }: { project: Project; isDarkMode: boolean }) {
-  const theme = isDarkMode ? themeStyles.dark : themeStyles.light;
+function ProjectRow({ project }: { project: Project }) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'IN PROGRESS':
+        return 'bg-blue-500';
+      case 'READY FOR DESIGN':
+        return 'bg-cyan-500';
+      default:
+        return 'bg-gray-500';
+    }
+  };
 
   return (
-    <div 
-      className="grid grid-cols-7 gap-4 p-4 border-b transition-colors hover:cursor-pointer"
-      style={{ 
-        borderColor: theme.border,
-        backgroundColor: theme.cardBackground
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = theme.hoverBackground;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = theme.cardBackground;
-      }}
-    >
+    <div className="grid grid-cols-7 gap-4 p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
       {/* Customer Details */}
       <div className="flex items-center space-x-3">
         <div 
@@ -275,56 +174,48 @@ function ProjectRow({ project, isDarkMode }: { project: Project; isDarkMode: boo
         >
           {project.customer.initials}
         </div>
-        <div>
-          <div className="font-medium" style={{ color: theme.textPrimary }}>
+        <div className="min-w-0 flex-1">
+          <div className="font-medium text-gray-900 dark:text-gray-100 truncate">
             {project.customer.name}
           </div>
-          <div className="text-sm" style={{ color: theme.textSecondary }}>
+          <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
             {project.customer.address}
           </div>
         </div>
       </div>
 
       {/* Project Details */}
-      <div style={{ color: theme.textPrimary }}>{project.projectDetails}</div>
+      <div className="text-gray-900 dark:text-gray-100 font-medium">
+        {project.projectDetails}
+      </div>
 
       {/* Key Dates */}
-      <div className="text-sm" style={{ color: theme.textSecondary }}>
+      <div className="text-sm text-gray-600 dark:text-gray-400">
         <div><span className="font-medium">Created:</span> {project.keyDates.created}</div>
         <div><span className="font-medium">Received:</span> {project.keyDates.received}</div>
       </div>
 
       {/* Status */}
       <div className="flex flex-col space-y-1">
-        <span 
-          className="px-2 py-1 rounded text-xs font-medium w-fit text-white"
-          style={{ 
-            backgroundColor: statusColors[project.status as keyof typeof statusColors] || '#6b7280'
-          }}
-        >
+        <span className={`px-2 py-1 rounded text-xs font-medium w-fit text-white ${getStatusColor(project.status)}`}>
           {project.status}
         </span>
         {project.priority && (
-          <span 
-            className="px-2 py-1 rounded text-xs font-medium w-fit text-white"
-            style={{ 
-              backgroundColor: priorityColors[project.priority as keyof typeof priorityColors]
-            }}
-          >
+          <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-medium w-fit">
             {project.priority}
           </span>
         )}
       </div>
 
       {/* Assigned To */}
-      <div className="italic" style={{ color: theme.textSecondary }}>
+      <div className="text-gray-500 dark:text-gray-400 italic">
         {project.assignedTo || 'Not assigned'}
       </div>
 
       {/* Countdown */}
       <div className="text-sm">
-        <div style={{ color: theme.textPrimary }}>{project.countdown}</div>
-        <div style={{ color: theme.textSecondary }}>{project.autoComplete}</div>
+        <div className="text-gray-900 dark:text-gray-100 font-medium">{project.countdown}</div>
+        <div className="text-gray-500 dark:text-gray-400">{project.autoComplete}</div>
       </div>
 
       {/* Actions */}
@@ -350,8 +241,7 @@ function Table({
   error, 
   sortField, 
   sortDirection, 
-  onSort, 
-  isDarkMode,
+  onSort,
   pagination,
   onPageChange
 }: { 
@@ -361,7 +251,6 @@ function Table({
   sortField: string | null;
   sortDirection: SortDirection;
   onSort: (field: string) => void;
-  isDarkMode: boolean;
   pagination: {
     current: number;
     total: number;
@@ -369,19 +258,16 @@ function Table({
   };
   onPageChange: (page: number) => void;
 }) {
-  const theme = isDarkMode ? themeStyles.dark : themeStyles.light;
-
   if (loading) {
     return (
-      <div className="rounded-lg overflow-hidden" style={{ backgroundColor: theme.cardBackground }}>
+      <div className="rounded-lg overflow-hidden bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-700">
         <TableHeader 
           sortField={sortField} 
           sortDirection={sortDirection} 
           onSort={onSort} 
-          isDarkMode={isDarkMode} 
         />
         <div className="p-8 text-center">
-          <div style={{ color: theme.textSecondary }}>Loading projects...</div>
+          <div className="text-gray-600 dark:text-gray-400">Loading projects...</div>
         </div>
       </div>
     );
@@ -389,23 +275,17 @@ function Table({
 
   if (error) {
     return (
-      <div className="rounded-lg overflow-hidden" style={{ backgroundColor: theme.cardBackground }}>
+      <div className="rounded-lg overflow-hidden bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-700">
         <TableHeader 
           sortField={sortField} 
           sortDirection={sortDirection} 
           onSort={onSort} 
-          isDarkMode={isDarkMode} 
         />
         <div className="p-8 text-center">
-          <div className="text-red-400">Error: {error}</div>
+          <div className="text-red-500 dark:text-red-400 mb-4">Error: {error}</div>
           <button 
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 rounded-md border"
-            style={{ 
-              borderColor: theme.border,
-              backgroundColor: theme.headerBackground,
-              color: theme.textPrimary
-            }}
+            className="px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
             Retry
           </button>
@@ -415,35 +295,28 @@ function Table({
   }
 
   return (
-    <div className="rounded-lg overflow-hidden" style={{ backgroundColor: theme.cardBackground }}>
+    <div className="rounded-lg overflow-hidden bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-700">
       <TableHeader 
         sortField={sortField} 
         sortDirection={sortDirection} 
         onSort={onSort} 
-        isDarkMode={isDarkMode} 
       />
       <div>
         {projects.length === 0 ? (
-          <div className="p-8 text-center" style={{ color: theme.textSecondary }}>
+          <div className="p-8 text-center text-gray-600 dark:text-gray-400">
             No projects found
           </div>
         ) : (
           projects.map((project) => (
-            <ProjectRow key={project.id} project={project} isDarkMode={isDarkMode} />
+            <ProjectRow key={project.id} project={project} />
           ))
         )}
       </div>
       
       {/* Pagination */}
       {pagination.total > 1 && (
-        <div 
-          className="flex items-center justify-between p-4 border-t"
-          style={{ 
-            borderColor: theme.border,
-            backgroundColor: theme.headerBackground
-          }}
-        >
-          <div style={{ color: theme.textSecondary }}>
+        <div className="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+          <div className="text-gray-600 dark:text-gray-400 text-sm">
             Showing {((pagination.current - 1) * pagination.size) + 1} to{' '}
             {Math.min(pagination.current * pagination.size, projects.length)} of{' '}
             {projects.length} results
@@ -452,27 +325,17 @@ function Table({
             <button
               onClick={() => onPageChange(pagination.current - 1)}
               disabled={pagination.current === 1}
-              className="px-3 py-1 rounded border disabled:opacity-50"
-              style={{ 
-                borderColor: theme.border,
-                backgroundColor: theme.cardBackground,
-                color: theme.textPrimary
-              }}
+              className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Previous
             </button>
-            <span style={{ color: theme.textPrimary }}>
+            <span className="text-gray-900 dark:text-gray-100 font-medium">
               {pagination.current} / {pagination.total}
             </span>
             <button
               onClick={() => onPageChange(pagination.current + 1)}
               disabled={pagination.current === pagination.total}
-              className="px-3 py-1 rounded border disabled:opacity-50"
-              style={{ 
-                borderColor: theme.border,
-                backgroundColor: theme.cardBackground,
-                color: theme.textPrimary
-              }}
+              className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Next
             </button>
@@ -490,7 +353,6 @@ export default function NewProjects() {
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(true);
   
   // Table controls
   const [sortField, setSortField] = useState<string | null>(null);
@@ -507,8 +369,6 @@ export default function NewProjects() {
       end: ''
     }
   });
-
-  const theme = isDarkMode ? themeStyles.dark : themeStyles.light;
 
   // Fetch function
   const fetchProjectsData = async () => {
@@ -663,31 +523,32 @@ export default function NewProjects() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: theme.background }}>
+    <div className="space-y-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">New Projects</h1>
+        <p className="text-gray-600 dark:text-gray-400">Manage all new project requests</p>
+      </div>
+      
       <Header 
         filters={filters}
         onFiltersChange={setFilters}
         onExport={handleExport}
-        isDarkMode={isDarkMode}
-        onThemeToggle={() => setIsDarkMode(!isDarkMode)}
       />
-      <div className="p-6">
-        <Table 
-          projects={paginatedProjects}
-          loading={loading}
-          error={error}
-          sortField={sortField}
-          sortDirection={sortDirection}
-          onSort={handleSort}
-          isDarkMode={isDarkMode}
-          pagination={{
-            current: currentPage,
-            total: totalPages,
-            size: pageSize
-          }}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      
+      <Table 
+        projects={paginatedProjects}
+        loading={loading}
+        error={error}
+        sortField={sortField}
+        sortDirection={sortDirection}
+        onSort={handleSort}
+        pagination={{
+          current: currentPage,
+          total: totalPages,
+          size: pageSize
+        }}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }
