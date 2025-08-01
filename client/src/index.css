@@ -39,34 +39,34 @@
 }
 
 .dark {
-  --background: hsl(222.2, 84%, 4.9%);
+  --background: hsl(0, 0%, 16.5%); /* #2a2a2a converted to HSL */
   --foreground: hsl(210, 40%, 98%);
-  --muted: hsl(217.2, 32.6%, 17.5%);
+  --muted: hsl(0, 0%, 20%); /* Slightly lighter than #2a2a2a */
   --muted-foreground: hsl(215, 20.2%, 65.1%);
-  --popover: hsl(222.2, 84%, 4.9%);
+  --popover: hsl(0, 0%, 16.5%); /* #2a2a2a */
   --popover-foreground: hsl(210, 40%, 98%);
-  --card: hsl(222.2, 84%, 4.9%);
+  --card: hsl(0, 0%, 16.5%); /* #2a2a2a */
   --card-foreground: hsl(210, 40%, 98%);
-  --border: hsl(217.2, 32.6%, 17.5%);
-  --input: hsl(217.2, 32.6%, 17.5%);
+  --border: hsl(0, 0%, 24%); /* Slightly lighter for borders */
+  --input: hsl(0, 0%, 20%); /* Slightly lighter for inputs */
   --primary: hsl(142.1, 76.2%, 36.3%);
   --primary-foreground: hsl(355.7, 100%, 97.3%);
-  --secondary: hsl(217.2, 32.6%, 17.5%);
+  --secondary: hsl(0, 0%, 20%); /* Slightly lighter than #2a2a2a */
   --secondary-foreground: hsl(210, 40%, 98%);
-  --accent: hsl(217.2, 32.6%, 17.5%);
+  --accent: hsl(0, 0%, 20%); /* Slightly lighter than #2a2a2a */
   --accent-foreground: hsl(210, 40%, 98%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(210, 40%, 98%);
   --ring: hsl(142.1, 76.2%, 36.3%);
   
-  /* Dark mode CRM colors */
-  --sidebar-background: hsl(222.2, 84%, 4.9%);
+  /* Dark mode CRM colors using #2a2a2a */
+  --sidebar-background: hsl(0, 0%, 16.5%); /* #2a2a2a */
   --sidebar-foreground: hsl(210, 40%, 98%);
   --sidebar-primary: hsl(142.1, 76.2%, 36.3%);
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(217.2, 32.6%, 17.5%);
+  --sidebar-accent: hsl(0, 0%, 20%); /* Slightly lighter for accents */
   --sidebar-accent-foreground: hsl(142.1, 76.2%, 36.3%);
-  --sidebar-border: hsl(217.2, 32.6%, 17.5%);
+  --sidebar-border: hsl(0, 0%, 24%); /* Slightly lighter for borders */
   --sidebar-ring: hsl(142.1, 76.2%, 36.3%);
 }
 

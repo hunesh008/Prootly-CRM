@@ -61,6 +61,10 @@ export default {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+        // Custom #2a2a2a color variants
+        "dark-bg": "#2a2a2a",
+        "dark-bg-light": "#3a3a3a",
+        "dark-bg-lighter": "#4a4a4a",
       },
       keyframes: {
         "accordion-down": {
