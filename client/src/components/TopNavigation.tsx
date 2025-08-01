@@ -42,7 +42,7 @@ export default function TopNavigation() {
 
   return (
     <>
-      <header className="bg-white dark:bg-gray-900 border-b border-slate-200 dark:border-gray-700 px-6 py-4 transition-colors duration-200">
+      <header className="bg-white dark:bg-[#2a2a2a] border-b border-slate-200 dark:border-[#3d3b3b] px-6 py-4 transition-colors duration-200">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200">{currentPageName}</h1>
@@ -52,31 +52,34 @@ export default function TopNavigation() {
             {/* Global Search */}
             <GlobalSearch />
             
-            {/* Theme Toggle */}
+            {/* Theme Toggle - Forced larger size */}
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleTheme}
               className="p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
             >
-              {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+              {theme === "light" ? 
+                <Moon className="!w-7 !h-7"  /> : 
+                <Sun className="!w-7 !h-7" />
+              }
             </Button>
             
-            {/* Notifications */}
+            {/* Notifications - Forced larger size */}
             <div className="relative">
-              <Button variant="ghost" size="sm" className="p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 relative">
-                <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center">
+              <Button variant="ghost" size="sm" className="p-3 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 relative">
+                <Bell className="!w-7 !h-7"  />
+                <span className="absolute -top-1 -right-1 h-5 w-5 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center">
                   3
                 </span>
               </Button>
             </div>
             
-            {/* Messages */}
+            {/* Messages - Forced larger size */}
             <div className="relative">
-              <Button variant="ghost" size="sm" className="p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 relative">
-                <MessageCircle className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+              <Button variant="ghost" size="sm" className="p-3 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 relative">
+                <MessageCircle className="!w-7 !h-7" />
+                <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                   5
                 </span>
               </Button>

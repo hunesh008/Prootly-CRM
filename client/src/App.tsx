@@ -15,6 +15,20 @@ import Members from "./pages/Members";
 import Settings from "./pages/Settings";
 import NotFound from "@/pages/not-found";
 
+// Design Pages
+import NewProjects from "./pages/design/NewProjects";
+import DesignReview from "./pages/design/DesignReview";
+import InRevision from "./pages/design/InRevision";
+import HoldProjects from "./pages/design/HoldProjects";
+import InDesigning from "./pages/design/InDesigning";
+import Completed from "./pages/design/Completed";
+import Canceled from "./pages/design/Canceled";
+
+// Garage Pages
+import Electrical from "./pages/garage/Electrical";
+import Structural from "./pages/garage/Structural";
+import Requirements from "./pages/garage/Requirements";
+
 function Router() {
   return (
     <Layout>
@@ -27,6 +41,22 @@ function Router() {
         <Route path="/garage" component={Garage} />
         <Route path="/members" component={Members} />
         <Route path="/settings" component={Settings} />
+
+        {/* Design Routes */}
+        <Route path="/design/new-projects" component={NewProjects} />
+        <Route path="/design/design-review" component={DesignReview} />
+        <Route path="/design/in-revision" component={InRevision} />
+        <Route path="/design/hold-projects" component={HoldProjects} />
+        <Route path="/design/in-designing" component={InDesigning} />
+        <Route path="/design/completed" component={Completed} />
+        <Route path="/design/canceled" component={Canceled} />
+        
+        {/* Garage Routes */}
+        <Route path="/garage/electrical" component={Electrical} />
+        <Route path="/garage/structural" component={Structural} />
+        <Route path="/garage/requirements" component={Requirements} />
+
+        {/* NotFound Route should be last */}
         <Route component={NotFound} />
       </Switch>
     </Layout>
