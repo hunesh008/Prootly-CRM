@@ -35,7 +35,7 @@ interface TableFilters {
   };
 }
 
-// Enhanced Header Component
+// Enhanced Responsive Header Component
 function Header({ 
   filters, 
   onFiltersChange, 
@@ -46,62 +46,117 @@ function Header({
   onExport: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-      <div className="flex items-center space-x-4">
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-md font-medium flex items-center space-x-2 transition-colors">
-          <span>📍</span>
-          <span>Planset</span>
-          <ChevronDown className="w-4 h-4" />
-        </button>
-        
-        {/* Status Filter */}
-        <div className="relative">
-          <select
-            value={filters.status}
-            onChange={(e) => onFiltersChange({
-              ...filters,
-              status: e.target.value as FilterType
-            })}
-            className="px-3 py-2 rounded-md text-white font-medium border-none outline-none appearance-none cursor-pointer bg-green-600 hover:bg-green-700 transition-colors"
+    <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+      {/* Mobile Layout */}
+      <div className="block lg:hidden p-4 space-y-4">
+        {/* Top Row - Title and Export */}
+        <div className="flex items-center justify-between">
+          <button className="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-2 rounded-md font-medium flex items-center space-x-2 transition-colors text-sm">
+            <span>📍</span>
+            <span>Planset</span>
+            <ChevronDown className="w-4 h-4" />
+          </button>
+          <button
+            onClick={onExport}
+            className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2 transition-colors text-sm"
           >
-            <option value="all">All Status</option>
-            <option value="IN PROGRESS">In Progress</option>
-            <option value="READY FOR DESIGN">Ready for Design</option>
-          </select>
-          <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
+            <Download className="w-4 h-4" />
+            <span className="hidden sm:inline">Export</span>
+          </button>
         </div>
-
-        {/* Export Button */}
-        <button
-          onClick={onExport}
-          className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2 transition-colors"
-        >
-          <Download className="w-4 h-4" />
-          <span>Export</span>
-        </button>
+        
+        {/* Bottom Row - Filters and Search */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <select
+              value={filters.status}
+              onChange={(e) => onFiltersChange({
+                ...filters,
+                status: e.target.value as FilterType
+              })}
+              className="w-full px-3 py-2 rounded-md text-white font-medium border-none outline-none appearance-none cursor-pointer bg-green-600 hover:bg-green-700 transition-colors text-sm"
+            >
+              <option value="all">All Status</option>
+              <option value="IN PROGRESS">In Progress</option>
+              <option value="READY FOR DESIGN">Ready for Design</option>
+            </select>
+            <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
+          </div>
+          
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={filters.search}
+              onChange={(e) => onFiltersChange({
+                ...filters,
+                search: e.target.value
+              })}
+              className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors text-sm"
+            />
+          </div>
+        </div>
       </div>
-      
-      <div className="flex items-center space-x-4">
-        {/* Advanced Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
-          <input
-            type="text"
-            placeholder="Search here..."
-            value={filters.search}
-            onChange={(e) => onFiltersChange({
-              ...filters,
-              search: e.target.value
-            })}
-            className="pl-10 pr-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-64 transition-colors"
-          />
+
+      {/* Desktop Layout */}
+      <div className="hidden lg:flex items-center justify-between p-4">
+        <div className="flex items-center space-x-4">
+          <button className="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-md font-medium flex items-center space-x-2 transition-colors">
+            <span>📍</span>
+            <span>Planset</span>
+            <ChevronDown className="w-4 h-4" />
+          </button>
+          
+          {/* Status Filter */}
+          <div className="relative">
+            <select
+              value={filters.status}
+              onChange={(e) => onFiltersChange({
+                ...filters,
+                status: e.target.value as FilterType
+              })}
+              className="px-3 py-2 rounded-md text-white font-medium border-none outline-none appearance-none cursor-pointer bg-green-600 hover:bg-green-700 transition-colors"
+            >
+              <option value="all">All Status</option>
+              <option value="IN PROGRESS">In Progress</option>
+              <option value="READY FOR DESIGN">Ready for Design</option>
+            </select>
+            <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
+          </div>
+
+          {/* Export Button */}
+          <button
+            onClick={onExport}
+            className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2 transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            <span>Export</span>
+          </button>
+        </div>
+        
+        <div className="flex items-center space-x-4">
+          {/* Advanced Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search here..."
+              value={filters.search}
+              onChange={(e) => onFiltersChange({
+                ...filters,
+                search: e.target.value
+              })}
+              className="pl-10 pr-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-64 transition-colors"
+            />
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-// Enhanced Table Header Component
+// Enhanced Responsive Table Header Component
 function TableHeader({ 
   sortField, 
   sortDirection, 
@@ -112,46 +167,62 @@ function TableHeader({
   onSort: (field: string) => void;
 }) {
   const getSortIcon = (field: string) => {
-    if (sortField !== field) return <ArrowUpDown className="w-4 h-4 opacity-50" />;
+    if (sortField !== field) return <ArrowUpDown className="w-3 h-3 md:w-4 md:h-4 opacity-50" />;
     return sortDirection === 'asc' ? 
-      <ChevronUp className="w-4 h-4" /> : 
-      <ChevronDown className="w-4 h-4" />;
+      <ChevronUp className="w-3 h-3 md:w-4 md:h-4" /> : 
+      <ChevronDown className="w-3 h-3 md:w-4 md:h-4" />;
   };
 
-  const headerClass = "flex items-center space-x-1 cursor-pointer hover:opacity-80 transition-opacity";
+  const headerClass = "flex items-center space-x-1 cursor-pointer hover:opacity-80 transition-opacity min-w-0";
 
   return (
-    <div className="grid grid-cols-7 gap-4 p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-medium uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800">
-      <div className={headerClass} onClick={() => onSort('customer')}>
-        <span>Customer Details</span>
-        {getSortIcon('customer')}
+    <>
+      {/* Desktop Header */}
+      <div className="hidden lg:grid grid-cols-7 gap-4 p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-medium uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800">
+        <div className={headerClass} onClick={() => onSort('customer')}>
+          <span>Customer Details</span>
+          {getSortIcon('customer')}
+        </div>
+        <div className={headerClass} onClick={() => onSort('project')}>
+          <span>Project Details</span>
+          {getSortIcon('project')}
+        </div>
+        <div className={headerClass} onClick={() => onSort('created')}>
+          <span>Key Dates</span>
+          {getSortIcon('created')}
+        </div>
+        <div className={headerClass} onClick={() => onSort('status')}>
+          <span>Status</span>
+          {getSortIcon('status')}
+        </div>
+        <div className={headerClass} onClick={() => onSort('assigned')}>
+          <span>Assigned To</span>
+          {getSortIcon('assigned')}
+        </div>
+        <div className={headerClass} onClick={() => onSort('countdown')}>
+          <span>Countdown</span>
+          {getSortIcon('countdown')}
+        </div>
+        <div>Actions</div>
       </div>
-      <div className={headerClass} onClick={() => onSort('project')}>
-        <span>Project Details</span>
-        {getSortIcon('project')}
+
+      {/* Mobile Header */}
+      <div className="lg:hidden grid grid-cols-3 gap-2 p-3 border-b border-gray-200 dark:border-gray-700 text-xs font-medium uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800">
+        <div className={headerClass} onClick={() => onSort('customer')}>
+          <span>Customer</span>
+          {getSortIcon('customer')}
+        </div>
+        <div className={headerClass} onClick={() => onSort('status')}>
+          <span>Status</span>
+          {getSortIcon('status')}
+        </div>
+        <div className="text-center">Actions</div>
       </div>
-      <div className={headerClass} onClick={() => onSort('created')}>
-        <span>Key Dates</span>
-        {getSortIcon('created')}
-      </div>
-      <div className={headerClass} onClick={() => onSort('status')}>
-        <span>Status</span>
-        {getSortIcon('status')}
-      </div>
-      <div className={headerClass} onClick={() => onSort('assigned')}>
-        <span>Assigned To</span>
-        {getSortIcon('assigned')}
-      </div>
-      <div className={headerClass} onClick={() => onSort('countdown')}>
-        <span>Countdown</span>
-        {getSortIcon('countdown')}
-      </div>
-      <div>Actions</div>
-    </div>
+    </>
   );
 }
 
-// Enhanced Individual Row Component
+// Enhanced Responsive Individual Row Component
 function ProjectRow({ project }: { project: Project }) {
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -165,72 +236,142 @@ function ProjectRow({ project }: { project: Project }) {
   };
 
   return (
-    <div className="grid grid-cols-7 gap-4 p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
-      {/* Customer Details */}
-      <div className="flex items-center space-x-3">
-        <div 
-          className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm"
-          style={{ backgroundColor: project.customer.color }}
-        >
-          {project.customer.initials}
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="font-medium text-gray-900 dark:text-gray-100 truncate">
-            {project.customer.name}
+    <>
+      {/* Desktop Row */}
+      <div className="hidden lg:grid grid-cols-7 gap-4 p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
+        {/* Customer Details */}
+        <div className="flex items-center space-x-3">
+          <div 
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
+            style={{ backgroundColor: project.customer.color }}
+          >
+            {project.customer.initials}
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
-            {project.customer.address}
+          <div className="min-w-0 flex-1">
+            <div className="font-medium text-gray-900 dark:text-gray-100 truncate">
+              {project.customer.name}
+            </div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
+              {project.customer.address}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Project Details */}
-      <div className="text-gray-900 dark:text-gray-100 font-medium">
-        {project.projectDetails}
-      </div>
+        {/* Project Details */}
+        <div className="text-gray-900 dark:text-gray-100 font-medium truncate">
+          {project.projectDetails}
+        </div>
 
-      {/* Key Dates */}
-      <div className="text-sm text-gray-600 dark:text-gray-400">
-        <div><span className="font-medium">Created:</span> {project.keyDates.created}</div>
-        <div><span className="font-medium">Received:</span> {project.keyDates.received}</div>
-      </div>
+        {/* Key Dates */}
+        <div className="text-sm text-gray-600 dark:text-gray-400">
+          <div><span className="font-medium">Created:</span> {project.keyDates.created}</div>
+          <div><span className="font-medium">Received:</span> {project.keyDates.received}</div>
+        </div>
 
-      {/* Status */}
-      <div className="flex flex-col space-y-1">
-        <span className={`px-2 py-1 rounded text-xs font-medium w-fit text-white ${getStatusColor(project.status)}`}>
-          {project.status}
-        </span>
-        {project.priority && (
-          <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-medium w-fit">
-            {project.priority}
+        {/* Status */}
+        <div className="flex flex-col space-y-1">
+          <span className={`px-2 py-1 rounded text-xs font-medium w-fit text-white ${getStatusColor(project.status)}`}>
+            {project.status}
           </span>
-        )}
+          {project.priority && (
+            <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-medium w-fit">
+              {project.priority}
+            </span>
+          )}
+        </div>
+
+        {/* Assigned To */}
+        <div className="text-gray-500 dark:text-gray-400 italic truncate">
+          {project.assignedTo || 'Not assigned'}
+        </div>
+
+        {/* Countdown */}
+        <div className="text-sm">
+          <div className="text-gray-900 dark:text-gray-100 font-medium">{project.countdown}</div>
+          <div className="text-gray-500 dark:text-gray-400">{project.autoComplete}</div>
+        </div>
+
+        {/* Actions */}
+        <div className="flex space-x-2">
+          <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
+            Edit
+          </button>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
+            Activity
+          </button>
+          <button className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1 rounded text-sm transition-colors">
+            <MoreHorizontal className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
-      {/* Assigned To */}
-      <div className="text-gray-500 dark:text-gray-400 italic">
-        {project.assignedTo || 'Not assigned'}
-      </div>
+      {/* Mobile Card */}
+      <div className="lg:hidden border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+        <div className="grid grid-cols-3 gap-3 p-4">
+          {/* Customer Info */}
+          <div className="flex items-center space-x-2 col-span-2">
+            <div 
+              className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs flex-shrink-0"
+              style={{ backgroundColor: project.customer.color }}
+            >
+              {project.customer.initials}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="font-medium text-gray-900 dark:text-gray-100 text-sm truncate">
+                {project.customer.name}
+              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                {project.customer.address}
+              </div>
+            </div>
+          </div>
 
-      {/* Countdown */}
-      <div className="text-sm">
-        <div className="text-gray-900 dark:text-gray-100 font-medium">{project.countdown}</div>
-        <div className="text-gray-500 dark:text-gray-400">{project.autoComplete}</div>
+          {/* Status */}
+          <div className="flex flex-col items-end space-y-1">
+            <span className={`px-2 py-1 rounded text-xs font-medium text-white ${getStatusColor(project.status)}`}>
+              {project.status}
+            </span>
+            {project.priority && (
+              <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">
+                {project.priority}
+              </span>
+            )}
+          </div>
+        </div>
+        
+        {/* Project Details */}
+        <div className="px-4 pb-2">
+          <div className="text-sm text-gray-900 dark:text-gray-100 font-medium">
+            {project.projectDetails}
+          </div>
+        </div>
+        
+        {/* Additional Info */}
+        <div className="px-4 pb-2 grid grid-cols-2 gap-4 text-xs text-gray-600 dark:text-gray-400">
+          <div>
+            <div><span className="font-medium">Created:</span> {project.keyDates.created}</div>
+            <div><span className="font-medium">Assigned:</span> {project.assignedTo || 'Not assigned'}</div>
+          </div>
+          <div>
+            <div><span className="font-medium">Countdown:</span> {project.countdown}</div>
+            <div className="text-gray-500 dark:text-gray-400">{project.autoComplete}</div>
+          </div>
+        </div>
+        
+        {/* Mobile Actions */}
+        <div className="px-4 pb-4 flex justify-end space-x-2">
+          <button className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-xs font-medium transition-colors">
+            Edit
+          </button>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs font-medium transition-colors">
+            Activity
+          </button>
+          <button className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1 rounded text-xs transition-colors">
+            <MoreHorizontal className="w-3 h-3" />
+          </button>
+        </div>
       </div>
-
-      {/* Actions */}
-      <div className="flex space-x-2">
-        <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
-          Edit
-        </button>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
-          Activity
-        </button>
-        <button className="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1 rounded text-sm transition-colors">
-          <MoreHorizontal className="w-4 h-4" />
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 
@@ -313,32 +454,58 @@ function Table({
         )}
       </div>
       
-      {/* Pagination */}
+      {/* Responsive Pagination */}
       {pagination.total > 1 && (
-        <div className="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
-          <div className="text-gray-600 dark:text-gray-400 text-sm">
-            Showing {((pagination.current - 1) * pagination.size) + 1} to{' '}
-            {Math.min(pagination.current * pagination.size, projects.length)} of{' '}
-            {projects.length} results
+        <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+          {/* Desktop Pagination */}
+          <div className="hidden sm:flex items-center justify-between p-4">
+            <div className="text-gray-600 dark:text-gray-400 text-sm">
+              Showing {((pagination.current - 1) * pagination.size) + 1} to{' '}
+              {Math.min(pagination.current * pagination.size, projects.length)} of{' '}
+              {projects.length} results
+            </div>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => onPageChange(pagination.current - 1)}
+                disabled={pagination.current === 1}
+                className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                Previous
+              </button>
+              <span className="text-gray-900 dark:text-gray-100 font-medium">
+                {pagination.current} / {pagination.total}
+              </span>
+              <button
+                onClick={() => onPageChange(pagination.current + 1)}
+                disabled={pagination.current === pagination.total}
+                className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                Next
+              </button>
+            </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => onPageChange(pagination.current - 1)}
-              disabled={pagination.current === 1}
-              className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Previous
-            </button>
-            <span className="text-gray-900 dark:text-gray-100 font-medium">
-              {pagination.current} / {pagination.total}
-            </span>
-            <button
-              onClick={() => onPageChange(pagination.current + 1)}
-              disabled={pagination.current === pagination.total}
-              className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Next
-            </button>
+
+          {/* Mobile Pagination */}
+          <div className="sm:hidden p-3">
+            <div className="text-center text-gray-600 dark:text-gray-400 text-xs mb-3">
+              {pagination.current} / {pagination.total} pages
+            </div>
+            <div className="flex justify-center space-x-2">
+              <button
+                onClick={() => onPageChange(pagination.current - 1)}
+                disabled={pagination.current === 1}
+                className="flex-1 max-w-20 px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+              >
+                Prev
+              </button>
+              <button
+                onClick={() => onPageChange(pagination.current + 1)}
+                disabled={pagination.current === pagination.total}
+                className="flex-1 max-w-20 px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -523,10 +690,10 @@ export default function NewProjects() {
   }, []);
 
   return (
-    <div className="space-y-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">New Projects</h1>
-        <p className="text-gray-600 dark:text-gray-400">Manage all new project requests</p>
+    <div className="space-y-4 md:space-y-6 p-4 md:p-0">
+      <div className="mb-4 md:mb-6">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">New Projects</h1>
+        <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">Manage all new project requests</p>
       </div>
       
       <Header 
@@ -535,20 +702,22 @@ export default function NewProjects() {
         onExport={handleExport}
       />
       
-      <Table 
-        projects={paginatedProjects}
-        loading={loading}
-        error={error}
-        sortField={sortField}
-        sortDirection={sortDirection}
-        onSort={handleSort}
-        pagination={{
-          current: currentPage,
-          total: totalPages,
-          size: pageSize
-        }}
-        onPageChange={setCurrentPage}
-      />
+      <div className="overflow-hidden">
+        <Table 
+          projects={paginatedProjects}
+          loading={loading}
+          error={error}
+          sortField={sortField}
+          sortDirection={sortDirection}
+          onSort={handleSort}
+          pagination={{
+            current: currentPage,
+            total: totalPages,
+            size: pageSize
+          }}
+          onPageChange={setCurrentPage}
+        />
+      </div>
     </div>
   );
 }
