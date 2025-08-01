@@ -691,11 +691,6 @@ export default function NewProjects() {
 
   return (
     <div className="space-y-4 md:space-y-6 p-4 md:p-0">
-      <div className="mb-4 md:mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">New Projects</h1>
-        <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">Manage all new project requests</p>
-      </div>
-
       <Header 
         filters={filters}
         onFiltersChange={setFilters}
