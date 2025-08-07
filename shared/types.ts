@@ -52,3 +52,50 @@ export interface PerformanceData {
   goals: number;
   feedback?: string;
 }
+
+export interface ProjectInvolvement {
+  id: string;
+  name: string;
+  status: 'active' | 'completed' | 'on-hold' | 'cancelled';
+  progress: number;
+  startDate: Date;
+  endDate: Date;
+  role: string;
+  priority: 'high' | 'medium' | 'low';
+}
+
+export interface WorkingHours {
+  week: string;
+  totalHours: number;
+  regularHours: number;
+  overtimeHours: number;
+  efficiency: number;
+}
+
+export interface KPIData {
+  metric: string;
+  value: number;
+  target: number;
+  unit: string;
+  trend: 'up' | 'down' | 'stable';
+  change: number;
+}
+
+export interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  date: Date;
+  type: 'certification' | 'award' | 'milestone' | 'training';
+  issuer?: string;
+  badge?: string;
+}
+
+export interface LeaveSummary {
+  totalLeaves: number;
+  usedLeaves: number;
+  remainingLeaves: number;
+  casualLeaves: number;
+  sickLeaves: number;
+  annualLeaves: number;
+}

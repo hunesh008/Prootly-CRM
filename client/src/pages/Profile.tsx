@@ -5,12 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { Download, Printer, X, MessageCircle, UserPlus, Camera, Edit, MapPin, Calendar, Users, TrendingUp, Settings, FileText, User } from "lucide-react";
+import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Download, Printer, X, MessageCircle, UserPlus, Camera, Edit, MapPin, Calendar, Users, TrendingUp, Settings, FileText, User, Clock, Building2, Target, Award, BarChart3, Upload, Activity, Zap, CheckCircle, AlertCircle, PauseCircle, XCircle, ArrowUp, ArrowDown, Minus } from "lucide-react";
 import ProfileTabsSimple from "@/components/profile/ProfileTabsSimple";
 import EditProfileModal from "@/components/profile/EditProfileModal";
 import GradeBadge from "@/components/profile/GradeBadge";
-import { EmployeeProfile, AttendanceData, LeaveRecord, Document, PerformanceData } from "../../../shared/types";
+import { EmployeeProfile, AttendanceData, LeaveRecord, Document, PerformanceData, ProjectInvolvement, WorkingHours, KPIData, Achievement, LeaveSummary } from "../../../shared/types";
 
 // Mock data - in real app this would come from API/database
 const mockProfileData: EmployeeProfile = {
@@ -122,12 +122,152 @@ const mockPerformanceData: PerformanceData[] = [
   { month: "March 2024", score: 88, goals: 85, feedback: "Excellent team collaboration and project delivery" }
 ];
 
+const mockProjectInvolvement: ProjectInvolvement[] = [
+  {
+    id: "proj-001",
+    name: "Solar Farm Development - Phase II",
+    status: "active",
+    progress: 75,
+    startDate: new Date("2024-06-01"),
+    endDate: new Date("2024-12-15"),
+    role: "Project Lead",
+    priority: "high"
+  },
+  {
+    id: "proj-002",
+    name: "Wind Energy Feasibility Study",
+    status: "completed",
+    progress: 100,
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-05-30"),
+    role: "Technical Consultant",
+    priority: "medium"
+  },
+  {
+    id: "proj-003",
+    name: "Green Building Certification",
+    status: "active",
+    progress: 45,
+    startDate: new Date("2024-07-15"),
+    endDate: new Date("2025-01-30"),
+    role: "Sustainability Expert",
+    priority: "medium"
+  },
+  {
+    id: "proj-004",
+    name: "Energy Storage Solutions",
+    status: "on-hold",
+    progress: 30,
+    startDate: new Date("2024-04-01"),
+    endDate: new Date("2024-10-15"),
+    role: "Senior Engineer",
+    priority: "low"
+  }
+];
+
+const mockWorkingHours: WorkingHours[] = [
+  {
+    week: "This Week",
+    totalHours: 42,
+    regularHours: 40,
+    overtimeHours: 2,
+    efficiency: 95
+  },
+  {
+    week: "Last Week",
+    totalHours: 45,
+    regularHours: 40,
+    overtimeHours: 5,
+    efficiency: 88
+  }
+];
+
+const mockKPIData: KPIData[] = [
+  {
+    metric: "Project Delivery",
+    value: 95,
+    target: 90,
+    unit: "%",
+    trend: "up",
+    change: 5
+  },
+  {
+    metric: "Client Satisfaction",
+    value: 4.8,
+    target: 4.5,
+    unit: "/5",
+    trend: "up",
+    change: 0.3
+  },
+  {
+    metric: "Team Efficiency",
+    value: 87,
+    target: 85,
+    unit: "%",
+    trend: "stable",
+    change: 0
+  },
+  {
+    metric: "Innovation Score",
+    value: 92,
+    target: 85,
+    unit: "%",
+    trend: "up",
+    change: 7
+  }
+];
+
+const mockAchievements: Achievement[] = [
+  {
+    id: "ach-001",
+    title: "Certified Solar Energy Professional",
+    description: "Advanced certification in solar energy systems design and implementation",
+    date: new Date("2024-05-15"),
+    type: "certification",
+    issuer: "Solar Power International"
+  },
+  {
+    id: "ach-002",
+    title: "Employee of the Quarter Q2 2024",
+    description: "Recognized for exceptional performance and leadership in renewable energy projects",
+    date: new Date("2024-06-30"),
+    type: "award",
+    issuer: "Prootly Energy Solutions"
+  },
+  {
+    id: "ach-003",
+    title: "Project Management Professional",
+    description: "PMP certification for advanced project management skills",
+    date: new Date("2024-03-20"),
+    type: "certification",
+    issuer: "Project Management Institute"
+  },
+  {
+    id: "ach-004",
+    title: "Green Building Expert",
+    description: "Completed advanced training in sustainable building practices",
+    date: new Date("2024-07-10"),
+    type: "training",
+    issuer: "Green Building Council"
+  }
+];
+
+const mockLeaveSummary: LeaveSummary = {
+  totalLeaves: 30,
+  usedLeaves: 8,
+  remainingLeaves: 22,
+  casualLeaves: 12,
+  sickLeaves: 10,
+  annualLeaves: 8
+};
+
 export default function Profile() {
   const [isVisible, setIsVisible] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [profileData, setProfileData] = useState<EmployeeProfile>(mockProfileData);
   const [animatedScore, setAnimatedScore] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Fade-in animation on component mount
   useEffect(() => {
@@ -172,6 +312,25 @@ export default function Profile() {
     window.print();
   };
 
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileData(prev => ({
+          ...prev,
+          profilePicture: e.target?.result as string
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerImageUpload = () => {
+    document.getElementById('image-upload')?.click();
+  };
+
   return (
     <TooltipProvider>
       <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
@@ -206,12 +365,26 @@ export default function Profile() {
                     {profileData.fullName.split(' ').map((n: string) => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
-                <button 
-                  className="absolute bottom-2 right-2 bg-green-600 hover:bg-green-700 text-white p-2 rounded-full shadow-lg transition-colors duration-200"
-                  onClick={() => setIsImageModalOpen(true)}
-                >
-                  <Camera className="h-4 w-4" />
-                </button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button 
+                      className="absolute bottom-2 right-2 bg-green-600 hover:bg-green-700 text-white p-2 rounded-full shadow-lg transition-colors duration-200"
+                      onClick={triggerImageUpload}
+                    >
+                      <Camera className="h-4 w-4" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Upload new profile picture</p>
+                  </TooltipContent>
+                </Tooltip>
+                <input 
+                  id="image-upload" 
+                  type="file" 
+                  accept="image/*" 
+                  className="hidden" 
+                  onChange={handleImageUpload}
+                />
               </div>
             </div>
 
@@ -305,40 +478,52 @@ export default function Profile() {
           <div className="border-b border-gray-200 dark:border-gray-700">
             <div className="px-8 md:px-12">
               <Tabs defaultValue="posts" className="w-full">
-                <TabsList className="grid w-full grid-cols-4 lg:grid-cols-6 bg-transparent h-12">
+                <TabsList className="grid w-full grid-cols-3 md:grid-cols-4 lg:grid-cols-8 bg-transparent h-12">
                   <TabsTrigger 
                     value="posts" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-4"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Posts
                   </TabsTrigger>
                   <TabsTrigger 
                     value="about" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-4"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
-                    About Me
+                    Dashboard
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="projects" 
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                  >
+                    Projects
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="performance" 
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                  >
+                    Performance
                   </TabsTrigger>
                   <TabsTrigger 
                     value="attendance" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-4"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Attendance
                   </TabsTrigger>
                   <TabsTrigger 
                     value="leave" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-4"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
-                    Leave History
+                    Leave
                   </TabsTrigger>
                   <TabsTrigger 
                     value="documents" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-4"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Documents
                   </TabsTrigger>
                   <TabsTrigger 
                     value="settings" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-4"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Settings
                   </TabsTrigger>
@@ -360,81 +545,446 @@ export default function Profile() {
                   </TabsContent>
 
                   <TabsContent value="about" className="space-y-6">
-                    <Card className="bg-white dark:bg-[#1e1e1e]">
-                      <CardContent className="p-6 space-y-6">
-                        {/* Bio Section */}
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">About</h3>
-                          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{profileData.bio}</p>
+                    {/* Bio Section */}
+                    <Card className="bg-white dark:bg-[#1e1e1e] hover:shadow-lg transition-shadow duration-300">
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <User className="h-5 w-5 text-blue-500" />
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">About Me</h3>
                         </div>
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{profileData.bio}</p>
+                      </CardContent>
+                    </Card>
 
-                        {/* Skills Section */}
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Skills</h3>
-                          <div className="flex flex-wrap gap-2">
-                            {profileData.skills?.map((skill, index) => (
-                              <Badge key={index} variant="secondary" className="px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                {skill}
-                              </Badge>
+                    {/* Main Dashboard Grid - 6 columns for optimal space usage */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      
+                      {/* Personal Information Card */}
+                      <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 bg-blue-500 rounded-lg">
+                              <User className="h-5 w-5 text-white" />
+                            </div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Personal Info</h3>
+                          </div>
+                          <div className="space-y-3">
+                            <div>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">Employee ID</p>
+                              <p className="font-medium text-gray-900 dark:text-white">{profileData.employeeId}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">Department</p>
+                              <p className="font-medium text-gray-900 dark:text-white">{profileData.department}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">Joining Date</p>
+                              <p className="font-medium text-gray-900 dark:text-white">{profileData.joiningDate.toLocaleDateString()}</p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Grade & Performance Card */}
+                      <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 bg-green-500 rounded-lg">
+                              <Target className="h-5 w-5 text-white" />
+                            </div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Performance</h3>
+                          </div>
+                          <div className="text-center">
+                            <div className="inline-flex items-center gap-2 mb-2">
+                              <div className="text-3xl font-bold text-green-600 dark:text-green-400">{animatedScore}</div>
+                              <GradeBadge score={profileData.performanceScore} />
+                            </div>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Overall Score</p>
+                            <div className="mt-3 bg-green-200 dark:bg-green-800 rounded-full h-2">
+                              <div 
+                                className="bg-green-500 h-2 rounded-full transition-all duration-1000 ease-out" 
+                                style={{ width: `${animatedScore}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Leave Summary Card */}
+                      <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 bg-orange-500 rounded-lg">
+                              <Calendar className="h-5 w-5 text-white" />
+                            </div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Leave Summary</h3>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3 text-center">
+                            <div>
+                              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{mockLeaveSummary.usedLeaves}</div>
+                              <p className="text-xs text-gray-600 dark:text-gray-400">Used</p>
+                            </div>
+                            <div>
+                              <div className="text-2xl font-bold text-green-600 dark:text-green-400">{mockLeaveSummary.remainingLeaves}</div>
+                              <p className="text-xs text-gray-600 dark:text-gray-400">Remaining</p>
+                            </div>
+                          </div>
+                          <div className="mt-3 text-center">
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              Total: {mockLeaveSummary.totalLeaves} days
+                            </p>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Working Hours Card */}
+                      <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 bg-purple-500 rounded-lg">
+                              <Clock className="h-5 w-5 text-white" />
+                            </div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Working Hours</h3>
+                          </div>
+                          <div className="space-y-3">
+                            {mockWorkingHours.map((week, index) => (
+                              <div key={index}>
+                                <div className="flex justify-between items-center">
+                                  <p className="text-sm text-gray-600 dark:text-gray-400">{week.week}</p>
+                                  <p className="font-semibold text-purple-600 dark:text-purple-400">{week.totalHours}h</p>
+                                </div>
+                                <div className="text-xs text-gray-500 dark:text-gray-500">
+                                  Regular: {week.regularHours}h | OT: {week.overtimeHours}h
+                                </div>
+                              </div>
                             ))}
                           </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* KPI Overview Card */}
+                      <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 bg-indigo-500 rounded-lg">
+                              <BarChart3 className="h-5 w-5 text-white" />
+                            </div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">KPI Overview</h3>
+                          </div>
+                          <div className="space-y-3">
+                            {mockKPIData.slice(0, 2).map((kpi, index) => (
+                              <div key={index}>
+                                <div className="flex items-center justify-between">
+                                  <p className="text-sm text-gray-600 dark:text-gray-400">{kpi.metric}</p>
+                                  <div className="flex items-center gap-1">
+                                    {kpi.trend === 'up' && <ArrowUp className="h-3 w-3 text-green-500" />}
+                                    {kpi.trend === 'down' && <ArrowDown className="h-3 w-3 text-red-500" />}
+                                    {kpi.trend === 'stable' && <Minus className="h-3 w-3 text-gray-500" />}
+                                    <span className="font-semibold text-indigo-600 dark:text-indigo-400">
+                                      {kpi.value}{kpi.unit}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="mt-1 bg-indigo-200 dark:bg-indigo-800 rounded-full h-1.5">
+                                  <div 
+                                    className="bg-indigo-500 h-1.5 rounded-full transition-all duration-1000" 
+                                    style={{ width: `${(kpi.value / kpi.target) * 100}%` }}
+                                  ></div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Document Upload Section */}
+                      <Card className="bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-900/20 dark:to-teal-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 bg-teal-500 rounded-lg">
+                              <Upload className="h-5 w-5 text-white" />
+                            </div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Documents</h3>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-teal-600 dark:text-teal-400 mb-2">{mockDocuments.length}</div>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Documents Uploaded</p>
+                            <Button size="sm" variant="outline" className="gap-2 hover:bg-teal-50 dark:hover:bg-teal-900/20">
+                              <Upload className="h-3 w-3" />
+                              Upload New
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Project Involvement Section */}
+                    <Card className="bg-white dark:bg-[#1e1e1e] hover:shadow-lg transition-shadow duration-300">
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-3 mb-6">
+                          <Building2 className="h-5 w-5 text-blue-500" />
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Project Involvement</h3>
                         </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {mockProjectInvolvement.map((project) => (
+                            <div key={project.id} className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                              <div className="flex items-center justify-between mb-3">
+                                <h4 className="font-semibold text-gray-900 dark:text-white">{project.name}</h4>
+                                <div className="flex items-center gap-2">
+                                  {project.status === 'active' && <CheckCircle className="h-4 w-4 text-green-500" />}
+                                  {project.status === 'completed' && <CheckCircle className="h-4 w-4 text-blue-500" />}
+                                  {project.status === 'on-hold' && <PauseCircle className="h-4 w-4 text-yellow-500" />}
+                                  {project.status === 'cancelled' && <XCircle className="h-4 w-4 text-red-500" />}
+                                  <Badge className={`text-xs ${
+                                    project.priority === 'high' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
+                                    project.priority === 'medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                                    'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+                                  }`}>
+                                    {project.priority}
+                                  </Badge>
+                                </div>
+                              </div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{project.role}</p>
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-gray-500 dark:text-gray-500">Progress</span>
+                                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">{project.progress}%</span>
+                              </div>
+                              <div className="mt-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div 
+                                  className="bg-blue-500 h-2 rounded-full transition-all duration-1000" 
+                                  style={{ width: `${project.progress}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
 
-                        {/* Work Information */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Work Information</h3>
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-3">
-                                <User className="h-4 w-4 text-gray-500" />
-                                <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">Employee ID</p>
-                                  <p className="font-medium text-gray-900 dark:text-white">{profileData.employeeId}</p>
-                                </div>
+                    {/* Achievements/Certifications Section */}
+                    <Card className="bg-white dark:bg-[#1e1e1e] hover:shadow-lg transition-shadow duration-300">
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-3 mb-6">
+                          <Award className="h-5 w-5 text-yellow-500" />
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Achievements & Certifications</h3>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {mockAchievements.map((achievement) => (
+                            <div key={achievement.id} className="flex items-start gap-4 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/10 dark:to-orange-900/10 rounded-lg hover:shadow-md transition-shadow duration-200">
+                              <div className={`p-2 rounded-lg ${
+                                achievement.type === 'certification' ? 'bg-blue-500' :
+                                achievement.type === 'award' ? 'bg-yellow-500' :
+                                achievement.type === 'training' ? 'bg-green-500' :
+                                'bg-purple-500'
+                              }`}>
+                                <Award className="h-4 w-4 text-white" />
                               </div>
-                              <div className="flex items-center gap-3">
-                                <Users className="h-4 w-4 text-gray-500" />
-                                <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">Reporting Manager</p>
-                                  <p className="font-medium text-gray-900 dark:text-white">{profileData.reportingManager}</p>
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <Calendar className="h-4 w-4 text-gray-500" />
-                                <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">Work Schedule</p>
-                                  <p className="font-medium text-gray-900 dark:text-white">{profileData.workSchedule}</p>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{achievement.title}</h4>
+                                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{achievement.description}</p>
+                                <div className="flex items-center justify-between">
+                                  <Badge variant="secondary" className="text-xs capitalize">
+                                    {achievement.type}
+                                  </Badge>
+                                  <span className="text-xs text-gray-500 dark:text-gray-500">
+                                    {achievement.date.toLocaleDateString()}
+                                  </span>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
 
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Personal Information</h3>
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-3">
-                                <User className="h-4 w-4 text-gray-500" />
-                                <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">Gender</p>
-                                  <p className="font-medium text-gray-900 dark:text-white">{profileData.gender}</p>
+                    {/* Skills Section */}
+                    <Card className="bg-white dark:bg-[#1e1e1e] hover:shadow-lg transition-shadow duration-300">
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <Zap className="h-5 w-5 text-purple-500" />
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Skills & Expertise</h3>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {profileData.skills?.map((skill, index) => (
+                            <Badge key={index} variant="secondary" className="px-3 py-2 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200 cursor-default">
+                              {skill}
+                            </Badge>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  <TabsContent value="projects" className="space-y-6">
+                    {/* Projects Overview */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                      <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                        <CardContent className="p-6 text-center">
+                          <Building2 className="h-8 w-8 mx-auto mb-2" />
+                          <div className="text-2xl font-bold">{mockProjectInvolvement.length}</div>
+                          <div className="text-sm opacity-90">Total Projects</div>
+                        </CardContent>
+                      </Card>
+                      <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
+                        <CardContent className="p-6 text-center">
+                          <CheckCircle className="h-8 w-8 mx-auto mb-2" />
+                          <div className="text-2xl font-bold">{mockProjectInvolvement.filter(p => p.status === 'completed').length}</div>
+                          <div className="text-sm opacity-90">Completed</div>
+                        </CardContent>
+                      </Card>
+                      <Card className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white">
+                        <CardContent className="p-6 text-center">
+                          <Activity className="h-8 w-8 mx-auto mb-2" />
+                          <div className="text-2xl font-bold">{mockProjectInvolvement.filter(p => p.status === 'active').length}</div>
+                          <div className="text-sm opacity-90">Active</div>
+                        </CardContent>
+                      </Card>
+                      <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
+                        <CardContent className="p-6 text-center">
+                          <Target className="h-8 w-8 mx-auto mb-2" />
+                          <div className="text-2xl font-bold">{Math.round(mockProjectInvolvement.reduce((acc, p) => acc + p.progress, 0) / mockProjectInvolvement.length)}%</div>
+                          <div className="text-sm opacity-90">Avg Progress</div>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Projects List */}
+                    <Card className="bg-white dark:bg-[#1e1e1e]">
+                      <CardContent className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Project Details</h3>
+                        <div className="space-y-4">
+                          {mockProjectInvolvement.map((project) => (
+                            <div key={project.id} className="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                              <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-4">
+                                  <div className={`p-3 rounded-lg ${
+                                    project.status === 'active' ? 'bg-green-100 dark:bg-green-900/20' :
+                                    project.status === 'completed' ? 'bg-blue-100 dark:bg-blue-900/20' :
+                                    project.status === 'on-hold' ? 'bg-yellow-100 dark:bg-yellow-900/20' :
+                                    'bg-red-100 dark:bg-red-900/20'
+                                  }`}>
+                                    {project.status === 'active' && <CheckCircle className="h-5 w-5 text-green-600" />}
+                                    {project.status === 'completed' && <CheckCircle className="h-5 w-5 text-blue-600" />}
+                                    {project.status === 'on-hold' && <PauseCircle className="h-5 w-5 text-yellow-600" />}
+                                    {project.status === 'cancelled' && <XCircle className="h-5 w-5 text-red-600" />}
+                                  </div>
+                                  <div>
+                                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{project.name}</h4>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                      {project.role} • {project.startDate.toLocaleDateString()} - {project.endDate.toLocaleDateString()}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <Badge className={`${
+                                    project.priority === 'high' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
+                                    project.priority === 'medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                                    'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+                                  }`}>
+                                    {project.priority} priority
+                                  </Badge>
+                                  <Badge variant="outline" className="capitalize">
+                                    {project.status}
+                                  </Badge>
                                 </div>
                               </div>
-                              <div className="flex items-center gap-3">
-                                <Calendar className="h-4 w-4 text-gray-500" />
-                                <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">Date of Birth</p>
-                                  <p className="font-medium text-gray-900 dark:text-white">{profileData.dateOfBirth?.toLocaleDateString()}</p>
+                              
+                              <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Progress</span>
+                                  <span className="text-sm font-bold text-blue-600 dark:text-blue-400">{project.progress}%</span>
                                 </div>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <MessageCircle className="h-4 w-4 text-gray-500" />
-                                <div>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">Contact</p>
-                                  <p className="font-medium text-gray-900 dark:text-white">{profileData.contactNumber}</p>
+                                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                  <div 
+                                    className={`h-3 rounded-full transition-all duration-1000 ${
+                                      project.progress >= 80 ? 'bg-green-500' :
+                                      project.progress >= 50 ? 'bg-blue-500' :
+                                      project.progress >= 25 ? 'bg-yellow-500' :
+                                      'bg-red-500'
+                                    }`}
+                                    style={{ width: `${project.progress}%` }}
+                                  ></div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  <TabsContent value="performance" className="space-y-6">
+                    {/* Performance Overview Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                      {mockKPIData.map((kpi, index) => (
+                        <Card key={index} className="bg-white dark:bg-[#1e1e1e] hover:shadow-lg transition-shadow duration-300">
+                          <CardContent className="p-6 text-center">
+                            <div className="flex items-center justify-center gap-2 mb-3">
+                              {kpi.trend === 'up' && <ArrowUp className="h-5 w-5 text-green-500" />}
+                              {kpi.trend === 'down' && <ArrowDown className="h-5 w-5 text-red-500" />}
+                              {kpi.trend === 'stable' && <Minus className="h-5 w-5 text-gray-500" />}
+                              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">{kpi.metric}</h3>
+                            </div>
+                            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-1">
+                              {kpi.value}{kpi.unit}
+                            </div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Target: {kpi.target}{kpi.unit}</p>
+                            <div className="mt-3 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                              <div 
+                                className={`h-2 rounded-full transition-all duration-1000 ${
+                                  kpi.value >= kpi.target ? 'bg-green-500' : 
+                                  kpi.value >= kpi.target * 0.8 ? 'bg-blue-500' : 
+                                  'bg-orange-500'
+                                }`}
+                                style={{ width: `${Math.min((kpi.value / kpi.target) * 100, 100)}%` }}
+                              ></div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+
+                    {/* Performance Timeline */}
+                    <Card className="bg-white dark:bg-[#1e1e1e]">
+                      <CardContent className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                          <TrendingUp className="h-5 w-5 text-blue-500" />
+                          Performance Timeline
+                        </h3>
+                        <div className="space-y-4">
+                          {mockPerformanceData.map((data, index) => (
+                            <div key={index} className="flex items-center gap-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                              <div className="flex-shrink-0">
+                                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
+                                  <span className="text-xl font-bold text-blue-600 dark:text-blue-400">{data.score}</span>
+                                </div>
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center justify-between mb-2">
+                                  <h4 className="font-semibold text-gray-900 dark:text-white">{data.month}</h4>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm text-gray-500 dark:text-gray-400">Goal: {data.goals}</span>
+                                    {data.score >= data.goals ? 
+                                      <CheckCircle className="h-4 w-4 text-green-500" /> : 
+                                      <AlertCircle className="h-4 w-4 text-orange-500" />
+                                    }
+                                  </div>
+                                </div>
+                                <p className="text-gray-600 dark:text-gray-400 text-sm">{data.feedback}</p>
+                                <div className="mt-2 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                  <div 
+                                    className={`h-2 rounded-full transition-all duration-1000 ${
+                                      data.score >= 90 ? 'bg-green-500' :
+                                      data.score >= 80 ? 'bg-blue-500' :
+                                      data.score >= 70 ? 'bg-yellow-500' :
+                                      'bg-red-500'
+                                    }`}
+                                    style={{ width: `${data.score}%` }}
+                                  ></div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </CardContent>
                     </Card>
