@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/contexts/ThemeContext";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { useLocation } from "wouter";
 import GlobalSearch from "@/components/GlobalSearch";
 import ProfileModal from "@/components/ProfileModal";
