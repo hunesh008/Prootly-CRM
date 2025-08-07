@@ -19,6 +19,21 @@ export const employees = pgTable("employees", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+export const employeeProfiles = pgTable("employee_profiles", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  employeeId: text("employee_id").notNull(),
+  fullName: text("full_name").notNull(),
+  department: text("department").notNull(),
+  designation: text("designation").notNull(),
+  email: text("email").notNull(),
+  contactNumber: text("contact_number").notNull(),
+  joiningDate: timestamp("joining_date").notNull(),
+  profilePicture: text("profile_picture"),
+  performanceScore: integer("performance_score").notNull().default(75),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 export const clients = pgTable("clients", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   companyName: text("company_name").notNull(),
@@ -71,6 +86,12 @@ export const insertCommentSchema = createInsertSchema(comments).omit({
   createdAt: true,
 });
 
+export const insertEmployeeProfileSchema = createInsertSchema(employeeProfiles).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
@@ -85,3 +106,6 @@ export type Project = typeof projects.$inferSelect;
 
 export type InsertComment = z.infer<typeof insertCommentSchema>;
 export type Comment = typeof comments.$inferSelect;
+
+export type InsertEmployeeProfile = z.infer<typeof insertEmployeeProfileSchema>;
+export type EmployeeProfile = typeof employeeProfiles.$inferSelect;

@@ -9,6 +9,7 @@ import {
   Warehouse,
   UserCheck,
   Settings,
+  User,
 } from "lucide-react";
 import {
   Tooltip,
@@ -56,6 +57,7 @@ const navigationItems = [
     ],
   },
   { path: "/members", label: "Members", icon: UserCheck },
+  { path: "/profile", label: "Profile", icon: User },
   { path: "/settings", label: "Settings", icon: Settings },
 ];
 

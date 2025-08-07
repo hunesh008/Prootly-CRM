@@ -29,6 +29,7 @@ const pageNames: Record<string, string> = {
   "/teams": "Teams",
   "/garage": "Garage",
   "/members": "Members",
+  "/profile": "Profile",
   "/settings": "Settings",
 };
 

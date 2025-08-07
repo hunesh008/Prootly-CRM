@@ -12,6 +12,7 @@ import Design from "./pages/Design";
 import Teams from "./pages/Teams";
 import Garage from "./pages/Garage";
 import Members from "./pages/Members";
+import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import NotFound from "@/pages/not-found";
 
@@ -40,6 +41,7 @@ function Router() {
         <Route path="/teams" component={Teams} />
         <Route path="/garage" component={Garage} />
         <Route path="/members" component={Members} />
+        <Route path="/profile" component={Profile} />
         <Route path="/settings" component={Settings} />
 
         {/* Design Routes */}
