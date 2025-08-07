@@ -333,13 +333,13 @@ export default function Profile() {
 
   return (
     <TooltipProvider>
-      <div className={`min-h-screen bg-green-50 dark:bg-[#202020] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         {/* Full Width Container */}
         <div className="w-full">
           {/* Cover Banner & Profile Header */}
           <div className="relative">
             {/* Cover Image */}
-            <div className="h-64 md:h-80 bg-gradient-to-r from-green-600 via-emerald-600 to-green-800 relative overflow-hidden">
+            <div className="h-64 md:h-80 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 relative overflow-hidden">
               <div className="absolute inset-0 bg-black bg-opacity-20"></div>
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-30"></div>
               {/* Geometric pattern overlay */}
@@ -361,7 +361,7 @@ export default function Profile() {
                 <Avatar className="w-32 h-32 md:w-40 md:h-40 border-6 border-white dark:border-gray-800 shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300" 
                       onClick={() => setIsImageModalOpen(true)}>
                   <AvatarImage src={profileData.profilePicture || ""} />
-                  <AvatarFallback className="text-4xl md:text-5xl font-semibold bg-gradient-to-br from-green-500 to-emerald-600 text-white">
+                  <AvatarFallback className="text-4xl md:text-5xl font-semibold bg-gradient-to-br from-blue-500 to-purple-600 text-white">
                     {profileData.fullName.split(' ').map((n: string) => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
@@ -419,7 +419,7 @@ export default function Profile() {
               {/* Name and Title */}
               <div className="space-y-2">
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{profileData.fullName}</h1>
-                <p className="text-xl text-green-600 dark:text-green-400 font-semibold">{profileData.designation}</p>
+                <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold">{profileData.designation}</p>
                 <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
@@ -434,7 +434,7 @@ export default function Profile() {
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3">
-                <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 gap-2">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 gap-2">
                   <UserPlus className="h-4 w-4" />
                   Follow
                 </Button>
@@ -446,7 +446,7 @@ export default function Profile() {
                   variant="outline" 
                   size="sm" 
                   onClick={handleEditProfile}
-                  className="gap-2 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors duration-200"
+                  className="gap-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-200"
                 >
                   <Edit className="h-4 w-4" />
                   Edit
@@ -475,55 +475,55 @@ export default function Profile() {
           </div>
 
           {/* Navigation Tabs */}
-          <div className="border-b border-green-200 dark:border-gray-700">
+          <div className="border-b border-gray-200 dark:border-gray-700">
             <div className="w-full px-4 md:px-8">
               <Tabs defaultValue="posts" className="w-full">
                 <TabsList className="grid w-full grid-cols-3 md:grid-cols-4 lg:grid-cols-8 bg-transparent h-12">
                   <TabsTrigger 
                     value="posts" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-green-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Posts
                   </TabsTrigger>
                   <TabsTrigger 
                     value="about" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-green-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Dashboard
                   </TabsTrigger>
                   <TabsTrigger 
                     value="projects" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-green-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Projects
                   </TabsTrigger>
                   <TabsTrigger 
                     value="performance" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-green-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Performance
                   </TabsTrigger>
                   <TabsTrigger 
                     value="attendance" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-green-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Attendance
                   </TabsTrigger>
                   <TabsTrigger 
                     value="leave" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-green-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Leave
                   </TabsTrigger>
                   <TabsTrigger 
                     value="documents" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-green-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Documents
                   </TabsTrigger>
                   <TabsTrigger 
                     value="settings" 
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-green-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none py-3 px-2 text-sm"
                   >
                     Settings
                   </TabsTrigger>
@@ -532,7 +532,7 @@ export default function Profile() {
                 {/* Tab Content */}
                 <div className="w-full py-8 px-4 md:px-8">
                   <TabsContent value="posts" className="space-y-6">
-                    <Card className="bg-white dark:bg-[#2a2a2a]">
+                    <Card className="bg-white dark:bg-[#1e1e1e]">
                       <CardContent className="p-6">
                         <div className="text-center py-12">
                           <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
@@ -560,10 +560,10 @@ export default function Profile() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                       
                       {/* Personal Information Card */}
-                      <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                      <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
                         <CardContent className="p-6">
                           <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-green-500 rounded-lg">
+                            <div className="p-2 bg-blue-500 rounded-lg">
                               <User className="h-5 w-5 text-white" />
                             </div>
                             <h3 className="font-semibold text-gray-900 dark:text-white">Personal Info</h3>
@@ -586,23 +586,23 @@ export default function Profile() {
                       </Card>
 
                       {/* Grade & Performance Card */}
-                      <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                      <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
                         <CardContent className="p-6">
                           <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-green-500 rounded-lg">
+                            <div className="p-2 bg-purple-500 rounded-lg">
                               <Target className="h-5 w-5 text-white" />
                             </div>
                             <h3 className="font-semibold text-gray-900 dark:text-white">Performance</h3>
                           </div>
                           <div className="text-center">
                             <div className="inline-flex items-center gap-2 mb-2">
-                              <div className="text-3xl font-bold text-green-600 dark:text-green-400">{animatedScore}</div>
+                              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">{animatedScore}</div>
                               <GradeBadge score={profileData.performanceScore} />
                             </div>
                             <p className="text-sm text-gray-600 dark:text-gray-400">Overall Score</p>
-                            <div className="mt-3 bg-green-200 dark:bg-green-800 rounded-full h-2">
+                            <div className="mt-3 bg-purple-200 dark:bg-purple-800 rounded-full h-2">
                               <div 
-                                className="bg-green-500 h-2 rounded-full transition-all duration-1000 ease-out" 
+                                className="bg-purple-500 h-2 rounded-full transition-all duration-1000 ease-out" 
                                 style={{ width: `${animatedScore}%` }}
                               ></div>
                             </div>
@@ -611,17 +611,17 @@ export default function Profile() {
                       </Card>
 
                       {/* Leave Summary Card */}
-                      <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                      <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
                         <CardContent className="p-6">
                           <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-green-500 rounded-lg">
+                            <div className="p-2 bg-orange-500 rounded-lg">
                               <Calendar className="h-5 w-5 text-white" />
                             </div>
                             <h3 className="font-semibold text-gray-900 dark:text-white">Leave Summary</h3>
                           </div>
                           <div className="grid grid-cols-2 gap-3 text-center">
                             <div>
-                              <div className="text-2xl font-bold text-red-600 dark:text-red-400">{mockLeaveSummary.usedLeaves}</div>
+                              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{mockLeaveSummary.usedLeaves}</div>
                               <p className="text-xs text-gray-600 dark:text-gray-400">Used</p>
                             </div>
                             <div>
@@ -638,10 +638,10 @@ export default function Profile() {
                       </Card>
 
                       {/* Working Hours Card */}
-                      <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                      <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
                         <CardContent className="p-6">
                           <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-green-500 rounded-lg">
+                            <div className="p-2 bg-purple-500 rounded-lg">
                               <Clock className="h-5 w-5 text-white" />
                             </div>
                             <h3 className="font-semibold text-gray-900 dark:text-white">Working Hours</h3>
@@ -651,7 +651,7 @@ export default function Profile() {
                               <div key={index}>
                                 <div className="flex justify-between items-center">
                                   <p className="text-sm text-gray-600 dark:text-gray-400">{week.week}</p>
-                                  <p className="font-semibold text-green-600 dark:text-green-400">{week.totalHours}h</p>
+                                  <p className="font-semibold text-purple-600 dark:text-purple-400">{week.totalHours}h</p>
                                 </div>
                                 <div className="text-xs text-gray-500 dark:text-gray-500">
                                   Regular: {week.regularHours}h | OT: {week.overtimeHours}h
@@ -663,10 +663,10 @@ export default function Profile() {
                       </Card>
 
                       {/* KPI Overview Card */}
-                      <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                      <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
                         <CardContent className="p-6">
                           <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-green-500 rounded-lg">
+                            <div className="p-2 bg-indigo-500 rounded-lg">
                               <BarChart3 className="h-5 w-5 text-white" />
                             </div>
                             <h3 className="font-semibold text-gray-900 dark:text-white">KPI Overview</h3>
@@ -680,14 +680,14 @@ export default function Profile() {
                                     {kpi.trend === 'up' && <ArrowUp className="h-3 w-3 text-green-500" />}
                                     {kpi.trend === 'down' && <ArrowDown className="h-3 w-3 text-red-500" />}
                                     {kpi.trend === 'stable' && <Minus className="h-3 w-3 text-gray-500" />}
-                                    <span className="font-semibold text-green-600 dark:text-green-400">
+                                    <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                                       {kpi.value}{kpi.unit}
                                     </span>
                                   </div>
                                 </div>
-                                <div className="mt-1 bg-green-200 dark:bg-green-800 rounded-full h-1.5">
+                                <div className="mt-1 bg-indigo-200 dark:bg-indigo-800 rounded-full h-1.5">
                                   <div 
-                                    className="bg-green-500 h-1.5 rounded-full transition-all duration-1000" 
+                                    className="bg-indigo-500 h-1.5 rounded-full transition-all duration-1000" 
                                     style={{ width: `${(kpi.value / kpi.target) * 100}%` }}
                                   ></div>
                                 </div>
@@ -698,18 +698,18 @@ export default function Profile() {
                       </Card>
 
                       {/* Document Upload Section */}
-                      <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                      <Card className="bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-900/20 dark:to-teal-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
                         <CardContent className="p-6">
                           <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-green-500 rounded-lg">
+                            <div className="p-2 bg-teal-500 rounded-lg">
                               <Upload className="h-5 w-5 text-white" />
                             </div>
                             <h3 className="font-semibold text-gray-900 dark:text-white">Documents</h3>
                           </div>
                           <div className="text-center">
-                            <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">{mockDocuments.length}</div>
+                            <div className="text-2xl font-bold text-teal-600 dark:text-teal-400 mb-2">{mockDocuments.length}</div>
                             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Documents Uploaded</p>
-                            <Button size="sm" variant="outline" className="gap-2 hover:bg-green-50 dark:hover:bg-green-900/20">
+                            <Button size="sm" variant="outline" className="gap-2 hover:bg-teal-50 dark:hover:bg-teal-900/20">
                               <Upload className="h-3 w-3" />
                               Upload New
                             </Button>
@@ -719,10 +719,10 @@ export default function Profile() {
                     </div>
 
                     {/* Project Involvement Section */}
-                    <Card className="bg-white dark:bg-[#2a2a2a] hover:shadow-lg transition-shadow duration-300">
+                    <Card className="bg-white dark:bg-[#1e1e1e] hover:shadow-lg transition-shadow duration-300">
                       <CardContent className="p-6">
                         <div className="flex items-center gap-3 mb-6">
-                          <Building2 className="h-5 w-5 text-green-500" />
+                          <Building2 className="h-5 w-5 text-blue-500" />
                           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Project Involvement</h3>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -747,11 +747,11 @@ export default function Profile() {
                               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{project.role}</p>
                               <div className="flex items-center justify-between">
                                 <span className="text-sm text-gray-500 dark:text-gray-500">Progress</span>
-                                <span className="text-sm font-medium text-green-600 dark:text-green-400">{project.progress}%</span>
+                                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">{project.progress}%</span>
                               </div>
                               <div className="mt-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                 <div 
-                                  className="bg-green-500 h-2 rounded-full transition-all duration-1000" 
+                                  className="bg-blue-500 h-2 rounded-full transition-all duration-1000" 
                                   style={{ width: `${project.progress}%` }}
                                 ></div>
                               </div>
