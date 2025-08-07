@@ -61,7 +61,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
   return (
     <div className="w-full">
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 mb-6 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-6 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg gap-1">
           <TabsTrigger 
             value="overview" 
             className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all duration-200"
@@ -108,7 +108,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
         <TabsContent value="overview" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Personal Information */}
-            <Card className="hover:shadow-lg transition-all duration-300">
+            <Card className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-lg transition-all duration-300 border-0">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
                   <User className="h-5 w-5 text-blue-500" />
@@ -165,7 +165,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
             </Card>
 
             {/* Work Information */}
-            <Card className="hover:shadow-lg transition-all duration-300">
+            <Card className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-lg transition-all duration-300 border-0">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
                   <Briefcase className="h-5 w-5 text-indigo-500" />
@@ -220,7 +220,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
 
           {/* Bio Section */}
           {profile.bio && (
-            <Card className="hover:shadow-lg transition-all duration-300">
+            <Card className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-lg transition-all duration-300 border-0">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
                   <FileText className="h-5 w-5 text-green-500" />
@@ -238,7 +238,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
 
         {/* Attendance Tab */}
         <TabsContent value="attendance" className="space-y-6">
-          <Card className="hover:shadow-lg transition-all duration-300">
+          <Card className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-lg transition-all duration-300 border-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="h-5 w-5 text-blue-500" />
@@ -300,7 +300,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
 
         {/* Leave History Tab */}
         <TabsContent value="leave" className="space-y-6">
-          <Card className="hover:shadow-lg transition-all duration-300">
+          <Card className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-lg transition-all duration-300 border-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-orange-500" />
@@ -335,7 +335,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
 
         {/* Documents Tab */}
         <TabsContent value="documents" className="space-y-6">
-          <Card className="hover:shadow-lg transition-all duration-300">
+          <Card className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-lg transition-all duration-300 border-0">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5 text-purple-500" />
@@ -376,7 +376,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
 
         {/* Performance Tab */}
         <TabsContent value="performance" className="space-y-6">
-          <Card className="hover:shadow-lg transition-all duration-300">
+          <Card className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-lg transition-all duration-300 border-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-green-500" />

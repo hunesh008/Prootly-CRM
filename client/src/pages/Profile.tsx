@@ -172,7 +172,8 @@ export default function Profile() {
   return (
     <TooltipProvider>
       <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        <div className="max-w-7xl mx-auto p-6 space-y-6">
+        {/* Centered Container */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {/* Header Section */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div className="space-y-1">
@@ -204,9 +205,10 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Profile Card - Left Sidebar */}
-            <div className="lg:col-span-4 xl:col-span-3">
+          {/* Main Layout: 3-column responsive grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Section - Profile Summary */}
+            <div className="lg:col-span-1">
               <div className="sticky top-6">
                 <ProfileCard
                   profile={profileData}
@@ -217,9 +219,9 @@ export default function Profile() {
               </div>
             </div>
 
-            {/* Main Content - Profile Tabs */}
-            <div className="lg:col-span-8 xl:col-span-9">
-              <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg transition-all duration-300">
+            {/* Right Section - Detailed Information */}
+            <div className="lg:col-span-2">
+              <div className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-lg transition-all duration-300">
                 <ProfileTabs
                   profile={profileData}
                   attendanceData={mockAttendanceData}

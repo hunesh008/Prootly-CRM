@@ -22,7 +22,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   animatedScore 
 }) => {
   return (
-    <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+    <Card className="bg-white dark:bg-[#1e1e1e] rounded-xl shadow p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-0">
       <CardHeader className="text-center pb-2">
         <div className="flex justify-center mb-4 relative">
           <div 
