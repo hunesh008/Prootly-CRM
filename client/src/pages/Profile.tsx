@@ -418,7 +418,10 @@ export default function Profile() {
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
               {/* Name and Title */}
               <div className="space-y-2">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{profileData.fullName}</h1>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{profileData.fullName}</h1>
+                  <GradeBadge score={profileData.performanceScore} />
+                </div>
                 <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold">{profileData.designation}</p>
                 <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-1">
@@ -465,10 +468,7 @@ export default function Profile() {
                 <div className="text-sm text-gray-600 dark:text-gray-400">Projects</div>
               </div>
               <div className="text-center">
-                <div className="flex items-center justify-center gap-2">
-                  <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{animatedScore}</div>
-                  <GradeBadge score={profileData.performanceScore} />
-                </div>
+                <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{animatedScore}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Performance Score</div>
               </div>
             </div>
@@ -595,10 +595,7 @@ export default function Profile() {
                             <h3 className="font-semibold text-gray-900 dark:text-white">Performance</h3>
                           </div>
                           <div className="text-center">
-                            <div className="inline-flex items-center gap-2 mb-2">
-                              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">{animatedScore}</div>
-                              <GradeBadge score={profileData.performanceScore} />
-                            </div>
+                            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">{animatedScore}</div>
                             <p className="text-sm text-gray-600 dark:text-gray-400">Overall Score</p>
                             <div className="mt-3 bg-purple-200 dark:bg-purple-800 rounded-full h-2">
                               <div 
