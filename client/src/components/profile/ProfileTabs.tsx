@@ -27,6 +27,7 @@ interface ProfileTabsProps {
   leaveRecords: LeaveRecord[];
   documents: Document[];
   performanceData: PerformanceData[];
+  activeTab?: string;
 }
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({
@@ -35,6 +36,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
   leaveRecords,
   documents,
   performanceData,
+  activeTab = "overview",
 }) => {
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("en-US", {
@@ -58,51 +60,25 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
     return `${months} month${months !== 1 ? "s" : ""}`;
   };
 
-  return (
-    <div className="w-full">
-      <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-6 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg gap-1">
-          <TabsTrigger 
-            value="overview" 
-            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all duration-200"
-            data-testid="tab-overview"
-          >
-            <User className="h-4 w-4 mr-2" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger 
-            value="attendance" 
-            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all duration-200"
-            data-testid="tab-attendance"
-          >
-            <Calendar className="h-4 w-4 mr-2" />
-            Attendance
-          </TabsTrigger>
-          <TabsTrigger 
-            value="leave" 
-            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all duration-200"
-            data-testid="tab-leave"
-          >
-            <Clock className="h-4 w-4 mr-2" />
-            Leave History
-          </TabsTrigger>
-          <TabsTrigger 
-            value="documents" 
-            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all duration-200"
-            data-testid="tab-documents"
-          >
-            <FileText className="h-4 w-4 mr-2" />
-            Documents
-          </TabsTrigger>
-          <TabsTrigger 
-            value="performance" 
-            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all duration-200"
-            data-testid="tab-performance"
-          >
-            <TrendingUp className="h-4 w-4 mr-2" />
-            Performance
-          </TabsTrigger>
-        </TabsList>
+  // Render specific tab content based on activeTab prop
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "attendance":
+        return renderAttendanceTab();
+      case "leave":
+        return renderLeaveTab();
+      case "documents":
+        return renderDocumentsTab();
+      case "performance":
+        return renderPerformanceTab();
+      default:
+        return renderOverviewTab();
+    }
+  };
+
+  const renderOverviewTab = () => (
+    <div className="w-full space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">

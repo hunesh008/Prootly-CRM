@@ -62,7 +62,7 @@ export default function TopNavigation() {
   };
 
   const handleProfileClick = () => {
-    setProfileModalOpen(true);
+    navigate('/profile');
     setDropdownOpen(false);
   };
 
