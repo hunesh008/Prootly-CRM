@@ -41,6 +41,15 @@ The application uses five main entities with clear relationships:
 - **Projects**: Project tracking with status categories (completed, hold, new, revision)
 - **Comments**: Activity feed system with author attribution and timestamps
 
+### HRM Profile System (Added August 2025)
+Comprehensive employee profile management with:
+- **Employee Profiles**: Full HRM-style profiles with personal/work information, skills, bio
+- **Performance Grading**: Automated A/B/C/D grade system based on performance scores (0-100)
+- **Attendance Tracking**: Daily attendance records with present/absent/late status tracking
+- **Leave Management**: Leave request history with approval status and categorization
+- **Document Storage**: Employee document management with upload/download capabilities
+- **Performance Analytics**: Monthly performance trends and feedback tracking
+
 ### API Architecture
 RESTful endpoints following standard conventions:
 - Employee CRUD operations with search functionality
@@ -56,6 +65,14 @@ RESTful endpoints following standard conventions:
 - Global search functionality across all entities
 - Responsive grid/list view toggles for data presentation
 - Toast notifications for user feedback
+- **Enhanced Profile System**: Modern HRM-style profile interface with:
+  - Animated performance score counters and progress bars
+  - Interactive grade badges with tooltips (A/B/C/D grading system)
+  - Tabbed interface for Overview, Attendance, Leave History, Documents, Performance
+  - Profile image lightbox modal with click-to-expand functionality
+  - Edit profile modal with form validation and image upload
+  - Smooth fade-in animations and hover effects throughout
+  - Dark/light theme support with consistent styling
 
 ## External Dependencies
 
