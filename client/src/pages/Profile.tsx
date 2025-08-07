@@ -334,12 +334,12 @@ export default function Profile() {
   return (
     <TooltipProvider>
       <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        {/* Centered Container */}
-        <div className="max-w-7xl mx-auto">
+        {/* Full Width Container */}
+        <div className="w-full">
           {/* Cover Banner & Profile Header */}
           <div className="relative">
             {/* Cover Image */}
-            <div className="h-64 md:h-80 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 relative overflow-hidden rounded-b-xl">
+            <div className="h-64 md:h-80 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 relative overflow-hidden">
               <div className="absolute inset-0 bg-black bg-opacity-20"></div>
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-30"></div>
               {/* Geometric pattern overlay */}
@@ -356,7 +356,7 @@ export default function Profile() {
             </div>
 
             {/* Profile Picture - Overlapping the banner */}
-            <div className="absolute -bottom-16 left-8 md:left-12">
+            <div className="absolute -bottom-16 left-4 md:left-8">
               <div className="relative">
                 <Avatar className="w-32 h-32 md:w-40 md:h-40 border-6 border-white dark:border-gray-800 shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300" 
                       onClick={() => setIsImageModalOpen(true)}>
@@ -414,7 +414,7 @@ export default function Profile() {
           </div>
 
           {/* Profile Info Section */}
-          <div className="px-8 md:px-12 pb-6 pt-20">
+          <div className="w-full px-4 md:px-8 pb-6 pt-20">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
               {/* Name and Title */}
               <div className="space-y-2">
@@ -476,7 +476,7 @@ export default function Profile() {
 
           {/* Navigation Tabs */}
           <div className="border-b border-gray-200 dark:border-gray-700">
-            <div className="px-8 md:px-12">
+            <div className="w-full px-4 md:px-8">
               <Tabs defaultValue="posts" className="w-full">
                 <TabsList className="grid w-full grid-cols-3 md:grid-cols-4 lg:grid-cols-8 bg-transparent h-12">
                   <TabsTrigger 
@@ -530,7 +530,7 @@ export default function Profile() {
                 </TabsList>
 
                 {/* Tab Content */}
-                <div className="py-8">
+                <div className="w-full py-8 px-4 md:px-8">
                   <TabsContent value="posts" className="space-y-6">
                     <Card className="bg-white dark:bg-[#1e1e1e]">
                       <CardContent className="p-6">
@@ -556,8 +556,8 @@ export default function Profile() {
                       </CardContent>
                     </Card>
 
-                    {/* Main Dashboard Grid - 6 columns for optimal space usage */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {/* Main Dashboard Grid - Full width with no gaps */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                       
                       {/* Personal Information Card */}
                       <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
@@ -735,13 +735,13 @@ export default function Profile() {
                                   {project.status === 'completed' && <CheckCircle className="h-4 w-4 text-blue-500" />}
                                   {project.status === 'on-hold' && <PauseCircle className="h-4 w-4 text-yellow-500" />}
                                   {project.status === 'cancelled' && <XCircle className="h-4 w-4 text-red-500" />}
-                                  <Badge className={`text-xs ${
+                                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                                     project.priority === 'high' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
                                     project.priority === 'medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
                                     'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
                                   }`}>
                                     {project.priority}
-                                  </Badge>
+                                  </span>
                                 </div>
                               </div>
                               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{project.role}</p>
@@ -783,9 +783,9 @@ export default function Profile() {
                                 <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{achievement.title}</h4>
                                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{achievement.description}</p>
                                 <div className="flex items-center justify-between">
-                                  <Badge variant="secondary" className="text-xs capitalize">
+                                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 capitalize">
                                     {achievement.type}
-                                  </Badge>
+                                  </span>
                                   <span className="text-xs text-gray-500 dark:text-gray-500">
                                     {achievement.date.toLocaleDateString()}
                                   </span>
@@ -883,9 +883,9 @@ export default function Profile() {
                                   }`}>
                                     {project.priority} priority
                                   </Badge>
-                                  <Badge variant="outline" className="capitalize">
+                                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 capitalize">
                                     {project.status}
-                                  </Badge>
+                                  </span>
                                 </div>
                               </div>
                               
