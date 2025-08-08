@@ -152,15 +152,15 @@ function DraggableComponent({
       className="relative group"
       data-testid={`draggable-${item.id}`}
     >
-      {/* Minimal Drag Handle - positioned to not interfere with component */}
+      {/* Enhanced Drag Handle */}
       <div
         {...attributes}
         {...listeners}
-        className="absolute top-1 right-1 z-20 p-1.5 bg-white/95 dark:bg-[#202020]/95 backdrop-blur-sm border border-gray-300 dark:border-gray-600 rounded-md cursor-grab hover:bg-gray-50 dark:hover:bg-[#2a2a2a] opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm"
+        className="absolute top-3 right-3 z-20 p-2 bg-white/95 dark:bg-[#2a2a2a]/95 backdrop-blur-sm border border-slate-200 dark:border-slate-600 rounded-lg cursor-grab hover:bg-slate-50 dark:hover:bg-slate-800 opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-sm hover:shadow-md"
         data-testid={`drag-handle-${item.id}`}
         title="Drag to reorder"
       >
-        <GripVertical className="w-3 h-3 text-gray-600 dark:text-gray-400" />
+        <GripVertical className="w-4 h-4 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" />
       </div>
 
       {/* Component renders with original dimensions and styling */}
@@ -177,16 +177,21 @@ interface TrashDropZoneProps {
 function TrashDropZone({ isOver }: TrashDropZoneProps) {
   return (
     <div
-      className={`fixed bottom-6 right-6 w-16 h-16 rounded-xl border-2 border-dashed transition-all duration-200 flex items-center justify-center z-50 backdrop-blur-sm ${
+      id="trash-zone"
+      className={`fixed bottom-8 right-8 w-16 h-16 rounded-xl border-2 border-dashed transition-all duration-300 flex items-center justify-center z-50 backdrop-blur-sm ${
         isOver
-          ? "border-red-500 bg-red-500/20 scale-105 shadow-lg shadow-red-500/20"
-          : "border-gray-400 dark:border-gray-600 bg-white/90 dark:bg-[#2a2a2a]/90"
+          ? "border-red-500 bg-red-500/20 scale-110 shadow-lg shadow-red-500/30"
+          : "border-slate-300 dark:border-slate-600 bg-white/90 dark:bg-[#2a2a2a]/90 hover:border-red-400 hover:bg-red-50/50 dark:hover:bg-red-950/50"
       }`}
       data-testid="trash-drop-zone"
       title="Drop here to remove component"
     >
       <Trash2
-        className={`w-5 h-5 transition-colors duration-200 ${isOver ? "text-red-500" : "text-gray-500 dark:text-gray-400"}`}
+        className={`w-6 h-6 transition-all duration-300 ${
+          isOver 
+            ? "text-red-500 scale-110" 
+            : "text-slate-400 dark:text-slate-500 hover:text-red-400 dark:hover:text-red-400"
+        }`}
       />
     </div>
   );
@@ -318,21 +323,21 @@ export default function DynamicDashboard() {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="min-h-screen bg-gray-50 dark:bg-[#161717] p-6 space-y-6 transition-colors duration-300">
-        {/* Dashboard Header */}
-        <Card className="bg-white dark:bg-[#202020] border border-gray-200 dark:border-gray-700 shadow-sm rounded-xl transition-colors duration-300">
-          <CardHeader className="p-6">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#1a1a1a] p-6 space-y-8 transition-colors duration-300">
+        {/* Enhanced Dashboard Header */}
+        <Card className="bg-white dark:bg-[#2a2a2a] border-0 shadow-sm rounded-xl overflow-hidden">
+          <CardHeader className="px-8 py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-[#00a15d] rounded-xl">
+                <div className="p-3 bg-gradient-to-br from-[#00a15d] to-[#008a4f] rounded-xl shadow-sm">
                   <LayoutDashboard className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-bold text-gray-900 dark:text-gray-100 font-['Inter']">
+                  <CardTitle className="text-2xl font-bold text-slate-800 dark:text-slate-200">
                     Solaroot Analytics
                   </CardTitle>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    Professional renewable energy management
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    Professional renewable energy management dashboard
                   </p>
                 </div>
               </div>
@@ -341,7 +346,7 @@ export default function DynamicDashboard() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      className="gap-2 bg-[#00a15d] hover:bg-[#008a4f] text-white font-medium px-4 py-2 rounded-lg transition-colors"
+                      className="gap-2 bg-gradient-to-r from-[#00a15d] to-[#008a4f] hover:from-[#008a4f] hover:to-[#00752f] text-white font-semibold px-6 py-2.5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
                       data-testid="button-add-component"
                     >
                       <Plus className="w-4 h-4" />
@@ -350,19 +355,19 @@ export default function DynamicDashboard() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
                     align="end"
-                    className="w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+                    className="w-64 bg-white dark:bg-[#2a2a2a] border border-slate-200 dark:border-slate-700 shadow-lg rounded-xl p-2"
                   >
                     {componentOptions.map((option) => (
                       <DropdownMenuItem
                         key={option.type}
                         onClick={() => addComponent(option.type)}
-                        className="flex flex-col items-start gap-1 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 focus:bg-gray-100 dark:focus:bg-gray-700"
+                        className="flex flex-col items-start gap-1 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-slate-50 dark:focus:bg-slate-800 cursor-pointer transition-colors"
                         data-testid={`menu-item-${option.type}`}
                       >
-                        <div className="font-medium text-gray-900 dark:text-gray-100">
+                        <div className="font-semibold text-slate-800 dark:text-slate-200">
                           {option.label}
                         </div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
                           {option.description}
                         </div>
                       </DropdownMenuItem>
@@ -373,17 +378,17 @@ export default function DynamicDashboard() {
             </div>
           </CardHeader>
 
-          <CardContent className="px-6 pb-4">
-            <div className="flex flex-wrap gap-3">
-              <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 dark:bg-[#00a15d]/10 border border-emerald-200 dark:border-[#00a15d]/20 rounded-lg">
-                <div className="w-2 h-2 bg-[#00a15d] rounded-full"></div>
-                <span className="text-sm font-medium text-emerald-700 dark:text-[#00a15d]">
+          <CardContent className="px-8 pb-6">
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200/50 dark:border-emerald-700/30 rounded-lg">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
                   Active: {dashboardItems.length}
                 </span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 dark:bg-[#333333] border border-slate-200 dark:border-[#404040] rounded-lg">
-                <div className="w-2 h-2 bg-slate-400 dark:bg-[#808080] rounded-full"></div>
-                <span className="text-sm font-medium text-slate-600 dark:text-[#b0b0b0]">
+              <div className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/30 rounded-lg">
+                <div className="w-2 h-2 bg-slate-400 dark:bg-slate-500 rounded-full"></div>
+                <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">
                   Available: {componentOptions.length - dashboardItems.length}
                 </span>
               </div>
@@ -397,30 +402,30 @@ export default function DynamicDashboard() {
             items={dashboardItems.map((item) => item.id)}
             strategy={verticalListSortingStrategy}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
               {dashboardItems.map(renderComponent)}
             </div>
           </SortableContext>
         ) : (
-          <Card className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-[#333333] shadow-sm rounded-xl transition-colors duration-300">
-            <CardContent className="text-center py-12">
-              <div className="p-4 bg-emerald-50 dark:bg-[#00a15d]/10 rounded-xl w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <LayoutDashboard className="w-8 h-8 text-emerald-600 dark:text-[#00a15d]" />
+          <Card className="bg-white dark:bg-[#2a2a2a] border-0 shadow-sm rounded-xl overflow-hidden">
+            <CardContent className="text-center py-16">
+              <div className="p-4 bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-2xl w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                <LayoutDashboard className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-[#f0f0f0] mb-2 font-['Inter']">
+              <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-3">
                 Build Your Dashboard
               </h3>
-              <p className="text-slate-600 dark:text-[#b0b0b0] mb-6 max-w-sm mx-auto">
-                Add components to create your renewable energy analytics view.
-                Drag and drop to reorder.
+              <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-md mx-auto">
+                Add components to create your personalized renewable energy analytics view.
+                Drag and drop to customize the layout.
               </p>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    className="gap-2 bg-[#00a15d] hover:bg-[#008a4f] text-white font-medium px-4 py-2 rounded-lg"
+                    className="gap-2 bg-gradient-to-r from-[#00a15d] to-[#008a4f] hover:from-[#008a4f] hover:to-[#00752f] text-white font-semibold px-8 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
                     data-testid="button-add-first-component"
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-5 h-5" />
                     Add Your First Component
                   </Button>
                 </DropdownMenuTrigger>

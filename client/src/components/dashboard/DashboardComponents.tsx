@@ -117,18 +117,18 @@ export const KPIComponent: React.FC<DashboardComponentProps> = ({
   id,
   onRemove,
 }) => (
-  <Card className="col-span-full min-h-[300px] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md rounded-xl">
-    <CardHeader className="pb-4">
+  <Card className="col-span-full bg-white dark:bg-[#2a2a2a] border-0 shadow-sm hover:shadow-md transition-all duration-300 rounded-xl overflow-hidden">
+    <CardHeader className="pb-4 px-6 pt-6">
       <CardTitle className="flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <div className="p-2 bg-emerald-500 rounded-lg">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-gradient-to-br from-[#00a15d] to-[#008a4f] rounded-lg shadow-sm">
             <Activity className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
               Key Performance Indicators
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
               Real-time business metrics
             </p>
           </div>
@@ -138,7 +138,7 @@ export const KPIComponent: React.FC<DashboardComponentProps> = ({
             variant="ghost"
             size="sm"
             onClick={() => onRemove(id)}
-            className="hover:bg-red-50 hover:text-red-600"
+            className="opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-600 dark:hover:text-red-400"
           >
             <X className="w-4 h-4" />
           </Button>
@@ -146,49 +146,49 @@ export const KPIComponent: React.FC<DashboardComponentProps> = ({
       </CardTitle>
     </CardHeader>
 
-    <CardContent className="p-6 pt-0">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <CardContent className="px-6 pb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {sampleKPIData.map((kpi, index) => (
           <div
             key={index}
-            className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg hover:shadow-sm transition-shadow duration-200"
+            className="group p-5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm transition-all duration-200"
           >
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-4">
               <div
-                className={`p-2 rounded-md ${
+                className={`p-2.5 rounded-xl ${
                   index === 0
-                    ? "bg-blue-100 dark:bg-blue-900/50"
+                    ? "bg-blue-100 dark:bg-blue-900/30"
                     : index === 1
-                      ? "bg-yellow-100 dark:bg-yellow-900/50"
+                      ? "bg-amber-100 dark:bg-amber-900/30"
                       : index === 2
-                        ? "bg-green-100 dark:bg-green-900/50"
-                        : "bg-purple-100 dark:bg-purple-900/50"
+                        ? "bg-emerald-100 dark:bg-emerald-900/30"
+                        : "bg-purple-100 dark:bg-purple-900/30"
                 }`}
               >
                 {index === 0 && (
                   <Target className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 )}
                 {index === 1 && (
-                  <Zap className="w-4 h-4 text-yellow-600 dark:text-yellow-400" />
+                  <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 )}
                 {index === 2 && (
-                  <Activity className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  <Activity className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 )}
                 {index === 3 && (
                   <Leaf className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                 )}
               </div>
-              <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                <ArrowUp className="w-3 h-3" />
-                <span className="text-xs font-medium">{kpi.change}</span>
+              <div className="flex items-center gap-1 px-2 py-1 bg-emerald-50 dark:bg-emerald-900/30 rounded-full">
+                <ArrowUp className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">{kpi.change}</span>
               </div>
             </div>
 
             <div>
-              <p className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1">
                 {kpi.value}
               </p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
                 {kpi.title}
               </p>
             </div>
@@ -203,18 +203,18 @@ export const DonutComponent: React.FC<DashboardComponentProps> = ({
   id,
   onRemove,
 }) => (
-  <Card className="col-span-full md:col-span-2 lg:col-span-1 min-h-[400px] bg-gradient-to-br from-white to-blue-50 dark:from-gray-900 dark:to-blue-900 border-0 shadow-lg rounded-2xl transition-all duration-500 hover:shadow-xl">
-    <CardHeader className="pb-4">
+  <Card className="group bg-white dark:bg-[#2a2a2a] border-0 shadow-sm hover:shadow-md transition-all duration-300 rounded-xl overflow-hidden">
+    <CardHeader className="pb-4 px-6 pt-6">
       <CardTitle className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+          <div className="p-2.5 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-sm">
             <PieChart className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
               Project Status
             </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
               Distribution overview
             </p>
           </div>
@@ -224,70 +224,71 @@ export const DonutComponent: React.FC<DashboardComponentProps> = ({
             variant="ghost"
             size="sm"
             onClick={() => onRemove(id)}
-            className="hover:bg-red-50 hover:text-red-600"
+            className="opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-600 dark:hover:text-red-400"
           >
             <X className="w-4 h-4" />
           </Button>
         )}
       </CardTitle>
     </CardHeader>
-    <CardContent className="p-6 pt-0">
-      <div className="relative mb-6">
-        <ResponsiveContainer width="100%" height={240}>
+
+    <CardContent className="px-6 pb-6">
+      <div className="h-[300px] relative">
+        <ResponsiveContainer width="100%" height="100%">
           <RechartsPieChart>
             <Pie
               data={sampleDonutData}
               cx="50%"
               cy="50%"
-              innerRadius={60}
-              outerRadius={100}
+              innerRadius={70}
+              outerRadius={120}
+              paddingAngle={2}
               dataKey="value"
-              strokeWidth={3}
-              stroke="var(--background)"
+              startAngle={90}
+              endAngle={450}
             >
               {sampleDonutData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={entry.color} 
+                  className="hover:opacity-80 transition-opacity cursor-pointer"
+                />
               ))}
             </Pie>
             <Tooltip
+              formatter={(value: number, name: string) => [`${value}%`, name]}
               contentStyle={{
-                backgroundColor: "white",
-                border: "1px solid #e5e7eb",
-                borderRadius: "12px",
-                color: "#374151",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+                backgroundColor: 'var(--card)',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                fontSize: '14px'
               }}
             />
           </RechartsPieChart>
         </ResponsiveContainer>
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="text-center">
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <p className="text-2xl font-bold text-slate-800 dark:text-slate-200">
               85
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Total Projects
             </p>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      
+      <div className="mt-6 grid grid-cols-2 gap-3">
         {sampleDonutData.map((item, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg"
-          >
-            <div
-              className="w-3 h-3 rounded-full"
+          <div key={index} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+            <div 
+              className="w-3 h-3 rounded-full flex-shrink-0" 
               style={{ backgroundColor: item.color }}
-            ></div>
-            <div className="flex-1">
-              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                {item.name}
-              </span>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                {item.value}
-              </p>
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300 truncate">{item.name}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{item.value}%</p>
             </div>
           </div>
         ))}
