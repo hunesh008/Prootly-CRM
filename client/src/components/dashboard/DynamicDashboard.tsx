@@ -7,8 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Plus, LayoutDashboard, Trash2, GripVertical, Sparkles, Settings } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Plus, LayoutDashboard, Trash2, GripVertical } from "lucide-react";
 import {
   DndContext,
   closestCenter,
@@ -30,18 +29,19 @@ import {
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import {
-  KPI,
-  Donut,
-  TrendLine,
-  Table,
-  Map,
-  ChoroplethMap,
-  Bar,
-  Column,
-  CalendarList,
-  CalendarCard,
-  ProgressBar,
-} from "./ModernDashboardComponents";
+  KPIComponent,
+  DonutComponent,
+  TrendLineComponent,
+  TableComponent,
+  MapComponent,
+  ChoroplethMapComponent,
+  BarComponent,
+  ColumnComponent,
+  CalendarListComponent,
+  CalendarCardComponent,
+  ProgressBarComponent,
+  type DashboardComponentProps,
+} from "./DashboardComponents";
 
 export interface DashboardItem {
   id: string;
@@ -100,18 +100,18 @@ const componentOptions: {
   },
 ];
 
-const componentMap: Record<ComponentType, React.FC<{ id: string; onRemove?: (id: string) => void }>> = {
-  kpi: KPI,
-  donut: Donut,
-  "trend-line": TrendLine,
-  table: Table,
-  map: Map,
-  "choropleth-map": ChoroplethMap,
-  bar: Bar,
-  column: Column,
-  "calendar-list": CalendarList,
-  "calendar-card": CalendarCard,
-  "progress-bar": ProgressBar,
+const componentMap: Record<ComponentType, React.FC<DashboardComponentProps>> = {
+  kpi: KPIComponent,
+  donut: DonutComponent,
+  "trend-line": TrendLineComponent,
+  table: TableComponent,
+  map: MapComponent,
+  "choropleth-map": ChoroplethMapComponent,
+  bar: BarComponent,
+  column: ColumnComponent,
+  "calendar-list": CalendarListComponent,
+  "calendar-card": CalendarCardComponent,
+  "progress-bar": ProgressBarComponent,
 };
 
 // Draggable wrapper component for dashboard items
@@ -338,7 +338,6 @@ export default function DynamicDashboard() {
               </div>
 
               <div className="flex items-center gap-3">
-                <ThemeToggle />
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
